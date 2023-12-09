@@ -1,25 +1,24 @@
 package models;
 
 public class Station {
-    private int id;
-    private String code;
-    private int uic;
-    private String nameShort;
-    private String nameMedium;
-    private String nameLong;
-    private String slug;
-    private String country;
-    private String type;
-    private double geoLat;
-    private double geoLng;
+    private final String code;
+    private final String fullName;
+    private final String slug;
+    private final String country;
+    private final String type;
+    private final double geoLat;
+    private final double geoLng;
 
-    public Station(int id, String code, int uic, String nameShort, String nameMedium, String nameLong, String slug, String country, String type, double geoLat, double geoLng) {
-        this.id = id;
+    public Station(
+            String code,
+            String fullName,
+            String slug,
+            String country,
+            String type,
+            double geoLat,
+            double geoLng) {
         this.code = code;
-        this.uic = uic;
-        this.nameShort = nameShort;
-        this.nameMedium = nameMedium;
-        this.nameLong = nameLong;
+        this.fullName = fullName;
         this.slug = slug;
         this.country = country;
         this.type = type;
@@ -29,18 +28,14 @@ public class Station {
 
     @Override
     public String toString() {
-        return "Station{" +
-                "id=" + id +
-                ", code='" + code + '\'' +
-                ", uic=" + uic +
-                ", nameShort='" + nameShort + '\'' +
-                ", nameMedium='" + nameMedium + '\'' +
-                ", nameLong='" + nameLong + '\'' +
-                ", slug='" + slug + '\'' +
-                ", country='" + country + '\'' +
-                ", type='" + type + '\'' +
-                ", geoLat=" + geoLat +
-                ", geoLng=" + geoLng +
-                '}';
+        return "Station {" + fullName + ", code: "+ code + "}" ;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 }

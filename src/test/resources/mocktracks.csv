@@ -1,0 +1,13 @@
+# VALID
+ac,ashd,2,2,30
+acdg,marne,22,22,0
+
+# INVALID
+# Missing Field
+ac,,12,12,30
+
+# Invalid Numeric Value
+acdg,brusz,240,xyz,0
+
+# Invalid Boolean Value
+acdg,valtgv,483,483,50

@@ -3,7 +3,7 @@ public class Main {
         Application app = new Application();
         app.initializeArrays();
 
-        System.out.println(app.getStations());
-        System.out.println(app.getConnections());
+        System.out.println(app.getStations().getFirst());
+        System.out.println(app.getTracks().getFirst());
     }
 }
