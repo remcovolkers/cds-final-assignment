@@ -1,4 +1,4 @@
-package test;
+package test.utils;
 
 import models.Station;
 import models.Track;
@@ -25,7 +25,7 @@ public class DataLoaderTest {
     public void testValidStationData() {
         // Test of de geldige data correct is geladen
         assertFalse("Lijst met stations moet niet leeg zijn", stations.isEmpty());
-        assertEquals("Verwachte code komt niet overeen", "code123", stations.getFirst().getCode());
+        assertEquals("Verwachte code komt niet overeen", "ABC", stations.getFirst().getCode());
         assertEquals("Verwachte naam komt niet overeen", "Station Naam", stations.getFirst().getFullName());
     }
 
