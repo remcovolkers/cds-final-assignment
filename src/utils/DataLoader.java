@@ -14,26 +14,19 @@ public class DataLoader {
     public static ArrayList<Station> loadStations(String filePath) {
         ArrayList<Station> stations = new ArrayList<>();
         Pattern pattern = Pattern.compile(
-                "^.*?," +                            // id: overslaan (kan elk karakter zijn, inclusief leeg)
-                        "(\\w+)," +                          // Code: één of meer woordkarakters
-                        ".*?," +                            // Overslaan, kan elk karakter zijn (inclusief leeg)
-                        ".*?," +                            // Hetzelfde voor de volgende velden
-                        ".*?," +
-                        ".*?," +
-                        "(.*?)," +                          // name_long: elk karakter, lazy
-                        "(.+?)," +                          // slug: elk karakter, lazy
-                        "(NL|D)," +                         // country: 'NL' of 'D'
-                        "(knooppuntIntercitystation|" +     // type: een van deze opgegeven stationtypes
-                        "stoptreinstation|" +
-                        "intercitystation|" +
-                        "knooppuntStoptreinstation|" +
-                        "megastation|" +
-                        "sneltreinstation|" +
-                        "knooppuntSneltreinstation|" +
-                        "facultatiefStation)," +
-                        "([\\d.-]+)," +                     // geoLat: getal (inclusief negatief en decimaal)
-                        "([\\d.-]+)" +                      // geoLng: getal (inclusief negatief en decimaal)
-                        "$"
+                "^"                     // Begin van de regel
+                        + "([1-9]\\d{0,3}),"      // 'id': 1 tot 4 cijfers, niet beginnend met 0 (Group 1)
+                        + "([A-Z]{1,6}),"         // 'code': 1 tot 6 hoofdletters (Group 2)
+                        + "(\\d{7}),"             // 'uic': 7 cijfers (Group 3)
+                        + "(.*?),"                // 'name_short': alle tekens (Group 4)
+                        + "(.*?),"                // 'name_medium': alle tekens (Group 5)
+                        + "(.*?),"                // 'name_long': alle tekens (Group 6)
+                        + "(.*?),"                // 'slug': alle tekens (Group 7)
+                        + "((NL|D|B|F|A|CH)),"    // 'country': keuze uit NL, D, B, F, A, CH (Group 8)
+                        + "((knooppuntIntercitystation|stoptreinstation|intercitystation|knooppuntStoptreinstation|megastation|sneltreinstation|knooppuntSneltreinstation|facultatiefStation))," // 'type': gespecificeerde stationstypes (Group 9)
+                        + "(\\d{1,3}\\.\\d+),"    // 'geo_lat': coördinaten (bv. 123.456) (Group 10)
+                        + "(\\d{1,3}\\.\\d+)"     // 'geo_lng': coördinaten (bv. 123.456) (Group 11)
+                        + "$"                   // Einde van de regel
         );
 
 
@@ -47,13 +40,16 @@ public class DataLoader {
                 }
                 Matcher matcher = pattern.matcher(line);
                 if (matcher.matches()) {
-                    Station station = new Station(matcher.group(1), // code
-                            matcher.group(2), // name_long
-                            matcher.group(3), // slug
-                            matcher.group(4), // country
-                            matcher.group(5), // type
-                            Double.parseDouble(matcher.group(6)), // geoLat
-                            Double.parseDouble(matcher.group(7))  // geoLng
+                    for (int i = 1; i <= matcher.groupCount(); i++) {
+                        System.out.println("Group " + i + ": " + matcher.group(i));
+                    }
+                    Station station = new Station(matcher.group(2), // code
+                            matcher.group(6), // name_long
+                            matcher.group(7), // slug
+                            matcher.group(8), // country
+                            matcher.group(10), // type
+                            Double.parseDouble(matcher.group(12)), // geoLat
+                            Double.parseDouble(matcher.group(13))  // geoLng
                     );
                     stations.add(station);
                 }
@@ -61,6 +57,7 @@ public class DataLoader {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println(stations.size());
         return stations;
     }
 

@@ -1,17 +1,13 @@
-skip,code,skip,skip,skip,name_long,slug,country,type,geo_lat,geo_lng
+id,code,uic,name_short,name_medium,name_long,slug,country,type,geo_lat,geo_lng
 # VALID
-skippedField0,code123,skippedField1,skippedField2,skippedField3,skippedField4,Station Naam,station-slug,NL,knooppuntIntercitystation,52.377956,4.897070
-skippedField0,code456,skippedField1,skippedField2,skippedField3,skippedField4,Een Ander Station,ander-station,NL,stoptreinstation,51.924420,4.477733
+557,MA,8002140,Augsburg,"Augsburg Hbf","Augsburg Hbf",augsburg-hbf,D,sneltreinstation,48.365430714393,10.88547706604
+55,AVTGV,8731896,Avignon,"Avignon TGV","Avignon TGV",avignon-tgv,F,megastation,43.92194,4.78604
 
-# INVALID
-# Missing Field
-skippedField0,code789,skippedField1,skippedField2,,skippedField4,Station Naam,,NL,knooppuntIntercitystation,52.090737,5.121420
-
+# Missing Field code
+102,,8400086,Baarn,Baarn,Baarn,baarn,NL,knooppuntStoptreinstation,52.208332061768,5.2808332443237
 # Invalid Country Code
-skippedField0,code101,skippedField1,skippedField2,skippedField3,skippedField4,Station Naam,station-slug,XX,knooppuntIntercitystation,52.378546,4.900205
-
+76,BH,8021156,Bentheim,"Bad Bentheim","Bad Bentheim",bad-bentheim,XX,knooppuntIntercitystation,52.309685595156,7.1585369110107
 # Invalid Station Type
-skippedField0,code102,skippedField1,skippedField2,skippedField3,skippedField4,Station Naam,station-slug,NL,onbestaandStationtype,52.311420,4.941470
-
+361,NSCH,8400457,Nweschans,"Bad Nieuweschans","Bad Nieuweschans",bad-nieuweschans,NL,ONBESTAAND,53.1844,7.19937
 # Invalid Geographical Coordinates
-skippedField0,code103,skippedField1,skippedField2,skippedField3,skippedField4,Station Naam,station-slug,NL,knooppuntIntercitystation,ongeldig,ongeldig
+558,OEYNH,8013585,"Bad Oeynh","Bad Oeynhausen","Bad Oeynhausen",bad-oeynhausen,D,intercitystation,BEEP,BOOP
