@@ -26,7 +26,7 @@ public class DataLoaderTest {
         // Test of de geldige data correct is geladen
         assertFalse("Lijst met stations moet niet leeg zijn", stations.isEmpty());
         assertEquals("Verwachte code komt niet overeen", "MA", stations.getFirst().getCode());
-        assertEquals("Verwachte naam komt niet overeen", "Station Naam", stations.getFirst().getFullName());
+        assertEquals("Verwachte naam komt niet overeen", "\"Augsburg Hbf\"", stations.getFirst().getFullName());
     }
 
     @Test

@@ -5,16 +5,16 @@ import models.Station;
 
 import java.util.List;
 
-public class BinarySearch implements SearchAlgorithm {
+public class BinarySearch implements SearchAlgorithm<List<Station>> {
     @Override
-    public Station search(List<Station> stations, String searchTerm) {
+    public Station search(List<Station> stations, String code) {
         int low = 0;
         int high = stations.size() - 1;
 
         while (low <= high) {
             int mid = low + (high - low) / 2;
             Station midStation = stations.get(mid);
-            int result = midStation.getCode().compareTo(searchTerm);
+            int result = midStation.getCode().compareTo(code);
 
             if (result == 0) {
                 // Gevonden
@@ -25,7 +25,6 @@ public class BinarySearch implements SearchAlgorithm {
                 high = mid - 1;
             }
         }
-
         // Niet gevonden
         return null;
     }

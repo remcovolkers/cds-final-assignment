@@ -1,9 +1,12 @@
+import datastructures.RemcoList;
 import models.Station;
 import searchalgorithms.BinarySearch;
+import searchalgorithms.LinearSearch;
 import searchalgorithms.SearchAlgorithm;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -44,7 +47,7 @@ public class Main {
                     System.out.println("\n > BINAIR ZOEKEN GESTART < \n \nGeef stationscode op:");
                     //Zoekquery input van gebruiker
                     String binarySearchQuery = scanner.nextLine();
-                    SearchAlgorithm searchAlgorithm = new BinarySearch();
+                    SearchAlgorithm<List<Station>> searchAlgorithm = new BinarySearch();
                     ArrayList<Station> sortedStations = app.getStations();
 
                     //Sorteer voor binarySearch
@@ -64,6 +67,30 @@ public class Main {
                         System.out.println("Station niet gevonden. Zoektijd: " + durationInNano + " nanoseconden.");
                     }
                     break;
+
+                case "5":
+                    System.out.println("\n > LINEAIR ZOEKEN GESTART < \n \nGeef stationscode op:");
+                    // Zoekquery input van gebruiker
+                    String linearSearchQuery = scanner.nextLine();
+                    SearchAlgorithm<RemcoList<Station>> linearSearch = new LinearSearch();
+                    RemcoList<Station> stationsList = app.getStationsRemcoList();
+
+                    // Tijdmeting starten
+                    long startTimeLinear = System.nanoTime();
+                    Station foundStationLinear = linearSearch.search(stationsList, linearSearchQuery);
+                    // Tijdmeting beëindigen
+                    long endTimeLinear = System.nanoTime();
+                    // Bereken de duur in nanoseconden
+                    long durationInNanoLinear = (endTimeLinear - startTimeLinear);
+
+                    if (foundStationLinear != null) {
+                        System.out.println("Station gevonden: " + foundStationLinear.getFullName() +
+                                " in " + durationInNanoLinear + " nanoseconden.");
+                    } else {
+                        System.out.println("Station niet gevonden. Zoektijd: " + durationInNanoLinear + " nanoseconden.");
+                    }
+                    break;
+
 
                 case "0":
                     System.out.println("Bedankt voor het gebruiken van de Spoormanager-applicatie. Tot ziens!");
