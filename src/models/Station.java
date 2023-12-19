@@ -28,7 +28,7 @@ public class Station {
 
     @Override
     public String toString() {
-        return "Station {" + fullName + ", code: "+ code + "}" ;
+        return "Station {" + fullName + ", code: " + code + "}";
     }
 
     public String getCode() {
@@ -37,5 +37,13 @@ public class Station {
 
     public String getFullName() {
         return fullName;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Station station = (Station) obj;
+        return code.equals(station.code);
     }
 }
