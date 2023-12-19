@@ -3,6 +3,8 @@ import models.Station;
 import searchalgorithms.BinarySearch;
 import searchalgorithms.LinearSearch;
 import searchalgorithms.SearchAlgorithm;
+import sortalgorithms.InsertionSort;
+import sortalgorithms.QuickSort;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -24,6 +26,8 @@ public class Main {
             System.out.println("3. Toon het spoornetwerk op de kaart");
             System.out.println("4. Zoek een station (binarySearch)");
             System.out.println("5. Zoek een station (linearSearch)");
+            System.out.println("6. Sorteer stations (InsertionSort)");
+            System.out.println("7. Sorteer stations (QuickSort)");
             System.out.println("0. Sluit de applicatie");
 
             System.out.print("Voer het nummer van uw keuze in: ");
@@ -72,6 +76,7 @@ public class Main {
                     System.out.println("\n > LINEAIR ZOEKEN GESTART < \n \nGeef stationscode op:");
                     // Zoekquery input van gebruiker
                     String linearSearchQuery = scanner.nextLine();
+                    // Gebruik van RemcoList :)
                     SearchAlgorithm<RemcoList<Station>> linearSearch = new LinearSearch();
                     RemcoList<Station> stationsList = app.getStationsRemcoList();
 
@@ -90,7 +95,39 @@ public class Main {
                         System.out.println("Station niet gevonden. Zoektijd: " + durationInNanoLinear + " nanoseconden.");
                     }
                     break;
+                case "6":
+                    System.out.println("\n > INSERTIONSORT VAN STATIONS GESTART < \n");
 
+                    // Maak een kopie van de lijst om te sorteren
+                    List<Station> stationsForInsertionSort = new ArrayList<>(app.getStations());
+
+                    // Voer InsertionSort uit
+                    long startTimeInsertion = System.nanoTime();
+                    InsertionSort.insertionSort(stationsForInsertionSort);
+                    long endTimeInsertion = System.nanoTime();
+                    long durationInsertion = endTimeInsertion - startTimeInsertion;
+                    System.out.println("InsertionSort voltooid in " + durationInsertion + " nanoseconden.");
+
+                    // Toon gesorteerde lijst (of een deel ervan) in de console
+                    System.out.println("Eerste 5 stations na InsertionSort: ");
+                    stationsForInsertionSort.stream().limit(5).forEach(station -> System.out.println(station.getCode() + " -> " + station.getFullName()));
+                    break;
+
+                case "7":
+                    System.out.println("\n > QUICKSORT VAN STATIONS GESTART < \n");
+                    // Maak een kopie van de lijst om te sorteren
+                    List<Station> stationsForQuickSort = new ArrayList<>(app.getStations());
+                    // Voer QuickSort uit
+                    long startTimeQuick = System.nanoTime();
+                    QuickSort.quickSort(stationsForQuickSort, 0, stationsForQuickSort.size() - 1);
+                    long endTimeQuick = System.nanoTime();
+                    long durationQuick = endTimeQuick - startTimeQuick;
+                    System.out.println("QuickSort voltooid in " + durationQuick + " nanoseconden.");
+
+                    // Toon gesorteerde lijst (of een deel ervan) in de console
+                    System.out.println("Eerste 5 stations na QuickSort: ");
+                    stationsForQuickSort.stream().limit(5).forEach(station -> System.out.println(station.getCode() + " -> " + station.getFullName()));
+                    break;
 
                 case "0":
                     System.out.println("Bedankt voor het gebruiken van de Spoormanager-applicatie. Tot ziens!");

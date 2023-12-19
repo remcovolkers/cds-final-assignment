@@ -1,6 +1,6 @@
 package models;
 
-public class Station {
+public class Station implements Comparable<Station> {
     private final String code;
     private final String fullName;
     private final String slug;
@@ -25,6 +25,7 @@ public class Station {
         this.geoLat = geoLat;
         this.geoLng = geoLng;
     }
+    
 
     @Override
     public String toString() {
@@ -45,5 +46,10 @@ public class Station {
         if (obj == null || getClass() != obj.getClass()) return false;
         Station station = (Station) obj;
         return code.equals(station.code);
+    }
+
+    @Override
+    public int compareTo(Station other) {
+        return this.code.compareTo(other.code);
     }
 }

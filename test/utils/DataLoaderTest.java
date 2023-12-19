@@ -1,4 +1,4 @@
-package test.utils;
+package utils;
 
 import datastructures.RemcoList;
 import models.Station;
@@ -12,16 +12,15 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 public class DataLoaderTest {
-
     private ArrayList<Station> stations;
     private RemcoList<Station> remcoStations;
     private ArrayList<Track> tracks;
 
     @Before
     public void setUp() {
-        stations = DataLoader.loadStations("src/test/resources/mockstations.csv");
-        remcoStations = DataLoader.loadStationsToRemcoList("src/test/resources/mockstations.csv");
-        tracks = DataLoader.loadTracks("src/test/resources/mocktracks.csv");
+        stations = DataLoader.loadStations("test/resources/mockstations.csv");
+        remcoStations = DataLoader.loadStationsToRemcoList("test/resources/mockstations.csv");
+        tracks = DataLoader.loadTracks("test/resources/mocktracks.csv");
     }
 
     @Test

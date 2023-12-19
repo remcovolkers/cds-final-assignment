@@ -1,4 +1,4 @@
-package test.datastructures;
+package datastructures;
 
 import datastructures.RemcoList;
 import models.Station;
