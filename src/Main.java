@@ -1,3 +1,4 @@
+import datastructures.RemcoBST;
 import datastructures.RemcoList;
 import models.Station;
 import searchalgorithms.BinarySearch;
@@ -96,6 +97,30 @@ public class Main {
                     }
                     break;
                 case "6":
+                    System.out.println("\n > BST ZOEKEN OP NAAM GESTART < \n \nGeef stationsnaam op:");
+                    String bstSearchQuery = scanner.nextLine();
+
+                    RemcoBST bst = new RemcoBST();
+                    for (Station station : app.getStations()) {
+                        bst.add(station);
+                    }
+
+                    // Tijdmeting starten
+                    long startTimeBST = System.nanoTime();
+                    Station foundStationBST = bst.findByName(bstSearchQuery);
+                    // Tijdmeting beëindigen
+                    long endTimeBST = System.nanoTime();
+                    // Bereken de duur in nanoseconden
+                    long durationInNanoBST = (endTimeBST - startTimeBST);
+
+                    if (foundStationBST != null) {
+                        System.out.println("Station gevonden: " + foundStationBST.getFullName() +
+                                " in " + durationInNanoBST + " nanoseconden.");
+                    } else {
+                        System.out.println("Station niet gevonden. Zoektijd: " + durationInNanoBST + " nanoseconden.");
+                    }
+                    break;
+                case "7":
                     System.out.println("\n > INSERTIONSORT VAN STATIONS GESTART < \n");
 
                     // Maak een kopie van de lijst om te sorteren
@@ -113,7 +138,7 @@ public class Main {
                     stationsForInsertionSort.stream().limit(5).forEach(station -> System.out.println(station.getCode() + " -> " + station.getFullName()));
                     break;
 
-                case "7":
+                case "8":
                     System.out.println("\n > QUICKSORT VAN STATIONS GESTART < \n");
                     // Maak een kopie van de lijst om te sorteren
                     List<Station> stationsForQuickSort = new ArrayList<>(app.getStations());
