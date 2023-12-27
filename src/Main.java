@@ -154,6 +154,11 @@ public class Main {
                     stationsForQuickSort.stream().limit(5).forEach(station -> System.out.println(station.getCode() + " -> " + station.getFullName()));
                     break;
 
+                case "9":
+                    System.out.println("\n > SPOORWEGNETWERK WEERGAVE < \n");
+                    System.out.println(app.spoorwegNetwerk.toGraphViz());
+                    break;
+
                 case "0":
                     System.out.println("Bedankt voor het gebruiken van de Spoormanager-applicatie. Tot ziens!");
                     scanner.close();

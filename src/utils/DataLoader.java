@@ -51,7 +51,7 @@ public class DataLoader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(stations);
+
         return stations;
     }
 
@@ -73,10 +73,14 @@ public class DataLoader {
                 }
                 Matcher matcher = pattern.matcher(line);
                 if (matcher.matches()) {
+
                     String stationVanCode = matcher.group(1);
                     String stationNaarCode = matcher.group(2);
-                    Station stationVan = stationsMap.get(stationVanCode);
-                    Station stationNaar = stationsMap.get(stationNaarCode);
+
+                    // dit is kapot
+                    Station stationVan = stationsMap.get(stationVanCode.toUpperCase());
+
+                    Station stationNaar = stationsMap.get(stationNaarCode.toUpperCase());
 
                     if (stationVan == null || stationNaar == null) {
                         continue; // Station niet gevonden, ga door naar de volgende regel

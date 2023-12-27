@@ -36,4 +36,27 @@ public class Graph {
     public Station getStation(String code) {
         return stationsMap.get(code);
     }
+
+    public String toGraphViz() {
+        StringBuilder graphViz = new StringBuilder("digraph G {\n");
+
+        for (String stationCode : adjList.keySet()) {
+            for (Track track : adjList.get(stationCode)) {
+                String fromStation = track.getStationVan().getCode();
+                String toStation = track.getStationNaar().getCode();
+                double distance = track.getDistance();
+                graphViz.append(String.format("  \"%s\" -> \"%s\" [label=\"%s km\"];\n", fromStation, toStation, distance));
+            }
+        }
+
+        graphViz.append("}");
+        return graphViz.toString();
+    }
+
+    @Override
+    public String toString() {
+        return "Graph met " + stationsMap.size() + " stations en " +
+                adjList.values().stream().mapToInt(List::size).sum() + " verbindingen.";
+    }
+
 }

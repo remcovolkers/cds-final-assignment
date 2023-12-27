@@ -25,7 +25,7 @@ public class DataLoaderTest {
 
         Map<String, Station> stationsMap = convertListToMap(stations);
         tracks = DataLoader.loadTracks("test/resources/mocktracks.csv", stationsMap);
-        System.out.println(tracks);
+
     }
 
     @Test

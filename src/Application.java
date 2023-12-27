@@ -12,12 +12,14 @@ class Application {
     public ArrayList<Station> stations = new ArrayList<>();
     public ArrayList<Track> tracks = new ArrayList<>();
     public RemcoList<Station> stations2 = new RemcoList<>();
-    Map<String, Station> stationsMap = convertListToMap(stations);
-
-    private final Graph spoorwegNetwerk = new Graph();
+    Map<String, Station> stationsMap = new HashMap<>();
+    public final Graph spoorwegNetwerk = new Graph();
 
     public void initializeApplicationData() {
         stations = DataLoader.loadStations("src/resources/stations.csv");
+        for (Station station : stations) {
+            stationsMap.put(station.getCode(), station);
+        }
         stations2 = DataLoader.loadStationsToRemcoList("src/resources/stations.csv");
         tracks = DataLoader.loadTracks("src/resources/tracks.csv", stationsMap);
         buildGraph();
@@ -43,13 +45,6 @@ class Application {
                 spoorwegNetwerk.addTrack(track);
             }
         }
-    }
-
-    private Map<String, Station> convertListToMap(ArrayList<Station> stations) {
-        Map<String, Station> stationsMap = new HashMap<>();
-        for (Station station : stations) {
-            stationsMap.put(station.getCode(), station);
-        }
-        return stationsMap;
+        System.out.println(spoorwegNetwerk);
     }
 }
