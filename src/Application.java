@@ -1,24 +1,26 @@
+import datastructures.Graph;
 import datastructures.RemcoList;
 import models.Track;
 import models.Station;
 import utils.DataLoader;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 class Application {
     public ArrayList<Station> stations = new ArrayList<>();
     public ArrayList<Track> tracks = new ArrayList<>();
     public RemcoList<Station> stations2 = new RemcoList<>();
+    Map<String, Station> stationsMap = convertListToMap(stations);
 
-    public void initializeArrays() {
+    private final Graph spoorwegNetwerk = new Graph();
+
+    public void initializeApplicationData() {
         stations = DataLoader.loadStations("src/resources/stations.csv");
         stations2 = DataLoader.loadStationsToRemcoList("src/resources/stations.csv");
-        tracks = DataLoader.loadTracks("src/resources/tracks.csv");
-    }
-
-
-    public ArrayList<Track> getTracks() {
-        return tracks;
+        tracks = DataLoader.loadTracks("src/resources/tracks.csv", stationsMap);
+        buildGraph();
     }
 
     public ArrayList<Station> getStations() {
@@ -27,5 +29,27 @@ class Application {
 
     public RemcoList<Station> getStationsRemcoList() {
         return stations2;
+    }
+
+    private void buildGraph() {
+        for (Station station : stations) {
+            spoorwegNetwerk.addStation(station);
+        }
+
+        for (Track track : tracks) {
+            Station stationVan = spoorwegNetwerk.getStation(track.getStationVan().getCode());
+            Station stationNaar = spoorwegNetwerk.getStation(track.getStationNaar().getCode());
+            if (stationVan != null && stationNaar != null) {
+                spoorwegNetwerk.addTrack(track);
+            }
+        }
+    }
+
+    private Map<String, Station> convertListToMap(ArrayList<Station> stations) {
+        Map<String, Station> stationsMap = new HashMap<>();
+        for (Station station : stations) {
+            stationsMap.put(station.getCode(), station);
+        }
+        return stationsMap;
     }
 }

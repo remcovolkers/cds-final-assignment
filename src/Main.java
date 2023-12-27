@@ -16,7 +16,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Application app = new Application();
-        app.initializeArrays();
+        app.initializeApplicationData();
 
         System.out.println("Welkom bij de Spoormanager-applicatie!");
 

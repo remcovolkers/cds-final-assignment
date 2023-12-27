@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,7 +56,7 @@ public class DataLoader {
     }
 
 
-    public static ArrayList<Track> loadTracks(String filePath) {
+    public static ArrayList<Track> loadTracks(String filePath, Map<String, Station> stationsMap) {
         ArrayList<Track> tracks = new ArrayList<>();
         Pattern pattern = Pattern.compile(
                 "^(\\w+)," +              // stationVan
@@ -72,7 +73,19 @@ public class DataLoader {
                 }
                 Matcher matcher = pattern.matcher(line);
                 if (matcher.matches()) {
-                    Track track = new Track(matcher.group(1), matcher.group(2), Integer.parseInt(matcher.group(3)));
+                    String stationVanCode = matcher.group(1);
+                    String stationNaarCode = matcher.group(2);
+                    Station stationVan = stationsMap.get(stationVanCode);
+                    Station stationNaar = stationsMap.get(stationNaarCode);
+
+                    if (stationVan == null || stationNaar == null) {
+                        continue; // Station niet gevonden, ga door naar de volgende regel
+                    }
+
+                    //30 betekent binnenlandse rit
+                    boolean binnenland = Integer.parseInt(matcher.group(3)) == 30;
+
+                    Track track = new Track(stationVan, stationNaar, binnenland);
                     tracks.add(track);
                 }
             }
@@ -81,6 +94,7 @@ public class DataLoader {
         }
         return tracks;
     }
+
 
     public static Station createStationFromLine(String line) {
         Pattern pattern = Pattern.compile(

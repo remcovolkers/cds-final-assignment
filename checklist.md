@@ -17,46 +17,46 @@
 
 ## Programma Functionaliteiten
 
-- [ ] Lineaire gegevensstructuur (gelinkte lijst of array)
-    - [ ] Lineair zoekalgoritme
-    - [ ] Binair zoekalgoritme
-- [ ] Twee sorteeralgoritmen (één uit selection-/insertionsort en één uit quicksort/mergesort)
-- [ ] Binaire zoekboom (BST of AVL-tree)
-- [ ] Hashtabel met stationscode als sleutel
-- [ ] MinHeap op basis van een array
+- [x] Lineaire gegevensstructuur (gelinkte lijst of array)
+    - [x] Lineair zoekalgoritme
+    - [x] Binair zoekalgoritme
+- [x] Twee sorteeralgoritmen (één uit selection-/insertionsort en één uit quicksort/mergesort)
+- [x] Binaire zoekboom (BST of AVL-tree)
+- [x] Hashtabel met stationscode als sleutel
+- [x] MinHeap op basis van een array
 - [ ] DFS- of BFS-algoritme voor "de rechthoek" functionaliteit
 - [ ] Dijkstra en A* algoritmen voor kortste route
-- [ ] Regular Expressions voor CSV-bestand validatie
+- [x] Regular Expressions voor CSV-bestand validatie
 - [ ] Testen met minimaal 75% code coverage (class, method, line en branch)
 
 ## Menu-gebaseerde Functionaliteiten
 
-- [ ] Zoeken van een station (lineair en binair)
-- [ ] Sorteren van verbindingen (tweemaal)
+- [x] Zoeken van een station (lineair en binair)
+- [x] Sorteren van verbindingen (tweemaal)
 - [ ] Bepalen van de kortste route via stationnamen of -codes
 - [ ] Bepalen van de MCST via stationnamen of -codes binnen een rechthoek
 - [ ] Optioneel: Grafisch tonen van de kortste route of de MCST
 
 ## Datastructuur Methodes
 
-- [ ] `isEmpty()` en `size()`
-- [ ] Voor lineaire datastructuur en boom zonder sleutel (`T extends Comparable<T>`):
-    - [ ] `add(T value)`
-    - [ ] `contains(T value)`
-    - [ ] `get(T value)`
-    - [ ] `remove(T key)` (optioneel voor AVL, vereist voor BST voor een "Voldoende")
-- [ ] Voor hashmap en boom met sleutel (`K extends Comparable<K>`, `V value`):
-    - [ ] `put(K key, V value)`
-    - [ ] `contains(K key)`
-    - [ ] `get(K key)`
-    - [ ] `remove(K key)`
+- [x] `isEmpty()` en `size()`
+- [x] Voor lineaire datastructuur en boom zonder sleutel (`T extends Comparable<T>`):
+    - [x] `add(T value)`
+    - [x] `contains(T value)`
+    - [x] `get(T value)`
+    - [x] `remove(T key)` (optioneel voor AVL, vereist voor BST voor een "Voldoende")
+- [x] Voor hashmap en boom met sleutel (`K extends Comparable<K>`, `V value`):
+    - [x] `put(K key, V value)`
+    - [x] `contains(K key)`
+    - [x] `get(K key)`
+    - [x] `remove(K key)`
 - [ ] Voor elke node in een boom:
     - [ ] `isLeaf()`
     - [ ] `height()`
-- [ ] Voor de min heap:
-    - [ ] `push(T value)`
-    - [ ] `peek()`
-    - [ ] `pop()`
+- [x] Voor de min heap:
+    - [x] `push(T value)`
+    - [x] `peek()`
+    - [x] `pop()`
     - [ ] Optioneel: `buildHeap()`
 - [ ] `toString()` voor alle datastructuren
 - [ ] Voor boom, heap en grafiek:
@@ -70,5 +70,5 @@
 
 ## Overige Aandachtspunten
 
-- [ ] Geen gebruik van andermans code buiten de genoemde uitzonderingen
+- [x] Geen gebruik van andermans code buiten de genoemde uitzonderingen
 - [ ] Beide het codebestand en het verantwoordingsdocument zijn vereist voor beoordeling

@@ -10,6 +10,8 @@ import utils.DataLoader;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DataLoaderTest {
     private ArrayList<Station> stations;
@@ -20,7 +22,10 @@ public class DataLoaderTest {
     public void setUp() {
         stations = DataLoader.loadStations("test/resources/mockstations.csv");
         remcoStations = DataLoader.loadStationsToRemcoList("test/resources/mockstations.csv");
-        tracks = DataLoader.loadTracks("test/resources/mocktracks.csv");
+
+        Map<String, Station> stationsMap = convertListToMap(stations);
+        tracks = DataLoader.loadTracks("test/resources/mocktracks.csv", stationsMap);
+        System.out.println(tracks);
     }
 
     @Test
@@ -68,4 +73,13 @@ public class DataLoaderTest {
         int expectedNumberOfTracks = 2;
         assertEquals("Aantal tracks komt niet overeen met verwachte", expectedNumberOfTracks, tracks.size());
     }
+
+    private Map<String, Station> convertListToMap(ArrayList<Station> stations) {
+        Map<String, Station> stationsMap = new HashMap<>();
+        for (Station station : stations) {
+            stationsMap.put(station.getCode(), station);
+        }
+        return stationsMap;
+    }
+
 }

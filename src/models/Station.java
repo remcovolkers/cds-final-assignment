@@ -25,7 +25,7 @@ public class Station implements Comparable<Station> {
         this.geoLat = geoLat;
         this.geoLng = geoLng;
     }
-    
+
 
     @Override
     public String toString() {
@@ -38,6 +38,14 @@ public class Station implements Comparable<Station> {
 
     public String getFullName() {
         return fullName;
+    }
+
+    public double getGeoLat() {
+        return geoLat;
+    }
+
+    public double getGeoLng() {
+        return geoLng;
     }
 
     @Override
