@@ -57,7 +57,7 @@ public class RemcoHashMap<K, V> {
     }
 
     private int getBucket(K key) {
-        return key.hashCode() % buckets.length;
+        return Math.abs(key.hashCode()) % buckets.length;
     }
 
     private static class Entry<K, V> {

@@ -1,3 +1,5 @@
+package core;
+
 import datastructures.Graph;
 import datastructures.RemcoList;
 import models.Track;
@@ -8,14 +10,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-class Application {
+public class ApplicationData {
     public ArrayList<Station> stations = new ArrayList<>();
     public ArrayList<Track> tracks = new ArrayList<>();
     public RemcoList<Station> stations2 = new RemcoList<>();
     Map<String, Station> stationsMap = new HashMap<>();
     public final Graph spoorwegNetwerk = new Graph();
 
-    public void initializeApplicationData() {
+    public void init() {
         stations = DataLoader.loadStations("src/resources/stations.csv");
         for (Station station : stations) {
             stationsMap.put(station.getCode(), station);
@@ -45,6 +47,5 @@ class Application {
                 spoorwegNetwerk.addTrack(track);
             }
         }
-        System.out.println(spoorwegNetwerk);
     }
 }

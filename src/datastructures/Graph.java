@@ -24,9 +24,6 @@ public class Graph {
 
     public void addTrack(Track track) {
         adjList.get(track.getStationVan().getCode()).add(track);
-        // Voeg ook een omgekeerde track toe als het geen gerichte grafiek is
-        adjList.get(track.getStationNaar().getCode()).add(
-                new Track(track.getStationNaar(), track.getStationVan(), track.getBinnenland()));
     }
 
     public List<Track> getAdjacentTracks(String stationCode) {

@@ -14,7 +14,7 @@ public class RemcoBST {
             return new BSTNode(station);
         }
 
-        int compare = station.getFullName().compareTo(current.station.getFullName());
+        int compare = station.getCode().compareTo(current.station.getCode());
 
         if (compare < 0) {
             current.left = addRecursive(current.left, station);
@@ -25,33 +25,54 @@ public class RemcoBST {
         return current;
     }
 
-    public Station findByName(String name) {
-        return findByNameRecursive(root, name);
+    public Station findByCode(String code) {
+        return findByCodeRecursive(root, code);
     }
 
-    private Station findByNameRecursive(BSTNode current, String name) {
+    private Station findByCodeRecursive(BSTNode current, String code) {
         if (current == null) {
             return null;
         }
 
-        int compare = name.compareTo(current.station.getFullName());
+        int compare = code.compareTo(current.station.getCode());
 
         if (compare == 0) {
             return current.station;
         } else if (compare < 0) {
-            return findByNameRecursive(current.left, name);
+            return findByCodeRecursive(current.left, code);
         } else {
-            return findByNameRecursive(current.right, name);
+            return findByCodeRecursive(current.right, code);
         }
     }
 
-    public class BSTNode {
+    public static class BSTNode {
         Station station;
         BSTNode left;
         BSTNode right;
 
         BSTNode(Station station) {
             this.station = station;
+        }
+    }
+
+    public String toGraphViz() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("digraph BST {\n");
+        toGraphVizRecursive(root, sb);
+        sb.append("}");
+        return sb.toString();
+    }
+
+    private void toGraphVizRecursive(BSTNode node, StringBuilder sb) {
+        if (node != null) {
+            if (node.left != null) {
+                sb.append("  \"").append(node.station.getCode()).append("\" -> \"").append(node.left.station.getCode()).append("\";\n");
+                toGraphVizRecursive(node.left, sb);
+            }
+            if (node.right != null) {
+                sb.append("  \"").append(node.station.getCode()).append("\" -> \"").append(node.right.station.getCode()).append("\";\n");
+                toGraphVizRecursive(node.right, sb);
+            }
         }
     }
 }
