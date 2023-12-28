@@ -1,22 +1,34 @@
 package models;
 
 public class Track {
-    private final String stationVan;
-    private final String stationNaar;
+    private final Station stationVan;
+    private final Station stationNaar;
     private final boolean binnenland;
+    private final double distance;
 
-    public Track(String stationVan, String stationNaar, int binnenland) {
+    public Track(Station stationVan, Station stationNaar, boolean binnenland) {
+        Coordinate coordVan = new Coordinate(stationVan.getGeoLat(), stationVan.getGeoLng());
+        Coordinate coordNaar = new Coordinate(stationNaar.getGeoLat(), stationNaar.getGeoLng());
         this.stationVan = stationVan;
         this.stationNaar = stationNaar;
-        this.binnenland = binnenland == 30;
+        this.binnenland = binnenland;
+        this.distance = coordVan.haversineDistance(coordNaar);
     }
 
-    public String getStationVan() {
+    public Station getStationVan() {
         return stationVan;
     }
 
-    public String getStationNaar() {
+    public Station getStationNaar() {
         return stationNaar;
+    }
+
+    public boolean getBinnenland() {
+        return binnenland;
+    }
+
+    public double getDistance() {
+        return distance;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package models;
 
-public class Station {
+public class Station implements Comparable<Station> {
     private final String code;
     private final String fullName;
     private final String slug;
@@ -26,9 +26,10 @@ public class Station {
         this.geoLng = geoLng;
     }
 
+
     @Override
     public String toString() {
-        return "Station {" + fullName + ", code: "+ code + "}" ;
+        return "Station {" + fullName + ", code: " + code + "}";
     }
 
     public String getCode() {
@@ -37,5 +38,26 @@ public class Station {
 
     public String getFullName() {
         return fullName;
+    }
+
+    public double getGeoLat() {
+        return geoLat;
+    }
+
+    public double getGeoLng() {
+        return geoLng;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Station station = (Station) obj;
+        return code.equals(station.code);
+    }
+
+    @Override
+    public int compareTo(Station other) {
+        return this.code.compareTo(other.code);
     }
 }

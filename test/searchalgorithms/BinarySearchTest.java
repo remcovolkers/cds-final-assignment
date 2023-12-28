@@ -1,4 +1,4 @@
-package test.searchalgorithms;
+package searchalgorithms;
 
 import models.Station;
 import org.junit.Before;
@@ -27,14 +27,14 @@ public class BinarySearchTest {
                 "knooppuntIntercitystation",
                 50.01,
                 50.02));
-        stations.add(new Station("002",
+        stations.add(new Station("003",
                 "Station B",
                 "Beaverly Hills",
                 "NL",
                 "knooppuntIntercitystation",
                 50.03,
                 50.04));
-        stations.add(new Station("003",
+        stations.add(new Station("002",
                 "Station C",
                 "Citytropolis",
                 "NL",
