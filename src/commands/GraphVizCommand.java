@@ -24,6 +24,8 @@ public class GraphVizCommand implements Command {
 
     @Override
     public void execute() {
+        System.out.println("\n>> GRAPHVIZ MENU << \n");
+
         System.out.println("Kies een optie voor GraphViz visualisatie:");
         System.out.println("1. Spoorwegnetwerk als GraphViz");
         System.out.println("2. BST als GraphViz");

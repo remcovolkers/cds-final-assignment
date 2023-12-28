@@ -24,6 +24,7 @@ public class SearchCommand implements Command {
 
     @Override
     public void execute() {
+        System.out.println("\n >> SEARCH MENU << \n");
         System.out.println("Wat wil je gebruiken om te zoeken:");
         System.out.println("1. Binary Search");
         System.out.println("2. Linear Search");

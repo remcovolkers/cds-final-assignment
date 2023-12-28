@@ -10,6 +10,7 @@ public class CommandFactory {
             case "1" -> new SearchCommand(appData, scanner);
             case "2" -> new SortCommand(appData, scanner);
             case "3" -> new GraphVizCommand(appData, scanner);
+            case "4" -> new AdvancedAlgorithmsCommand(appData, scanner);
             default -> null;
         };
     }

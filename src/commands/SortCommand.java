@@ -21,6 +21,7 @@ public class SortCommand implements Command {
 
     @Override
     public void execute() {
+        System.out.println("\n >> SORTEER MENU << \n");
         System.out.println("Kies het type sorteeralgoritme:");
         System.out.println("1. Insertion Sort");
         System.out.println("2. Quick Sort");
