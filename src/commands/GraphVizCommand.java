@@ -25,7 +25,6 @@ public class GraphVizCommand implements Command {
     @Override
     public void execute() {
         System.out.println("\n>> GRAPHVIZ MENU << \n");
-
         System.out.println("Kies een optie voor GraphViz visualisatie:");
         System.out.println("1. Spoorwegnetwerk als GraphViz");
         System.out.println("2. BST als GraphViz");
@@ -37,7 +36,7 @@ public class GraphVizCommand implements Command {
                 break;
             case "2":
                 buildBST();
-                performBstToGraphViz(remcoBST.toGraphViz(), "src/assets/boomViz.svg");
+                performBstToGraphViz(remcoBST.toGraphViz(), "src/assets/binary-tree.svg");
                 break;
             default:
                 System.out.println("Ongeldige keuze.");
@@ -52,7 +51,6 @@ public class GraphVizCommand implements Command {
     }
 
     private void performGraphToGraphViz(String dotString, String outputPath) {
-        // Hier komt de code om de GraphViz te renderen zoals eerder besproken
         renderGraphViz(dotString, outputPath);
     }
 

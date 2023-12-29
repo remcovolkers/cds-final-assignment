@@ -48,6 +48,17 @@ public class Station implements Comparable<Station> {
         return geoLng;
     }
 
+    public double haversineDistanceTo(Station other) {
+        final double R = 6371.0; // Radius van de aarde in kilometers
+        double latDistance = Math.toRadians(other.geoLat - this.geoLat);
+        double lonDistance = Math.toRadians(other.geoLng - this.geoLng);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(this.geoLat)) * Math.cos(Math.toRadians(other.geoLat))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c; // Retourneert de afstand in kilometers
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

@@ -1,5 +1,6 @@
 package commands;
 
+import advancedalgorithms.AStarAlgorithm;
 import advancedalgorithms.BFSAlgorithm;
 import advancedalgorithms.DijkstraAlgorithm;
 import advancedalgorithms.PrimAlgorithm;
@@ -25,7 +26,8 @@ public class AdvancedAlgorithmsCommand implements Command {
 
         System.out.println("Selecteer een geavanceerde algoritme-optie:");
         System.out.println("1. Stations binnen een rechthoekige zone");
-        System.out.println("2. Routeplanning");
+        System.out.println("2. Routeplanning Dijkstra");
+        System.out.println("3. Routeplanning A*");
 
         String choice = scanner.nextLine();
         switch (choice) {
@@ -33,7 +35,10 @@ public class AdvancedAlgorithmsCommand implements Command {
                 printStationsInRectangle();
                 break;
             case "2":
-                printRoutePlanningStationToStation();
+                printRoutePlanningStationToStationDijkstra();
+                break;
+            case "3":
+                printRoutePlanningStationToStationAStar();
                 break;
             default:
                 System.out.println("Ongeldige keuze.");
@@ -108,7 +113,7 @@ public class AdvancedAlgorithmsCommand implements Command {
         System.out.println("Totale lengte van de spoorverbindingen: " + totalLength + " km");
     }
 
-    private void printRoutePlanningStationToStation() {
+    private void printRoutePlanningStationToStationDijkstra() {
         System.out.println("Voer de stationscode in van het startstation (bv. LTV):");
         String startStationCode = scanner.nextLine();
         System.out.println("Voer de stationscode in van het eindstation (bv. LC):");
@@ -138,6 +143,53 @@ public class AdvancedAlgorithmsCommand implements Command {
         path.forEach(station -> System.out.print(station.getFullName() + " -> "));
         System.out.println("Einde");
     }
+
+    private void printRoutePlanningStationToStationAStar() {
+        System.out.println("Voer de stationscode in van het startstation (bv. LTV):");
+        String startStationCode = scanner.nextLine();
+        System.out.println("Voer de stationscode in van het eindstation (bv. LC):");
+        String endStationCode = scanner.nextLine();
+
+        // Zoek de Station objecten die overeenkomen met de gegeven codes
+        Station startStation = appData.spoorwegNetwerk.getStation(startStationCode);
+        Station endStation = appData.spoorwegNetwerk.getStation(endStationCode);
+
+        if (startStation == null || endStation == null) {
+            System.out.println("Een of beide stations zijn niet gevonden in het netwerk.");
+            return;
+        }
+
+        // Voer A* algoritme uit
+        AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(appData.spoorwegNetwerk, endStation, appData.tracks);
+        List<Station> path = aStarAlgorithm.execute(startStation);
+
+        // Bereken de totale afstand
+        double totalDistance = calculateTotalDistance(path);
+
+        // Toon de resultaten
+        System.out.println("De route van " + startStation.getFullName() +
+                " naar " + endStation.getFullName() + " via A* is " + totalDistance + " km.");
+        System.out.print("Route: ");
+        path.forEach(station -> System.out.print(station.getFullName() + " -> "));
+        System.out.println("Einde");
+    }
+
+    private double calculateTotalDistance(List<Station> path) {
+        double totalDistance = 0.0;
+        for (int i = 0; i < path.size() - 1; i++) {
+            Station currentStation = path.get(i);
+            Station nextStation = path.get(i + 1);
+            // Vind de afstand tussen de huidige en de volgende station
+            for (Track track : appData.spoorwegNetwerk.getAdjacentTracks(currentStation.getCode())) {
+                if (track.getStationNaar().equals(nextStation)) {
+                    totalDistance += track.getDistance();
+                    break;
+                }
+            }
+        }
+        return totalDistance;
+    }
+
 
     // Deze methode reconstrueert het pad van de eindstation tot de startstation
     private LinkedList<Station> getPath(Map<Station, Station> previous, Station endStation) {
