@@ -1,10 +1,11 @@
 package datastructures;
 
-import static org.junit.Assert.*;
-
 import models.Station;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class RemcoBSTTest {
     private RemcoBST bst;

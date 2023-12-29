@@ -1,13 +1,12 @@
 package sortalgorithms;
 
-import static org.junit.Assert.*;
-
 import models.Station;
 import org.junit.Test;
-import sortalgorithms.InsertionSort;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertTrue;
 
 public class InsertionSortTest {
 

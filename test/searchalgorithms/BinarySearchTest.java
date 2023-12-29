@@ -3,10 +3,8 @@ package searchalgorithms;
 import models.Station;
 import org.junit.Before;
 import org.junit.Test;
-import searchalgorithms.BinarySearch;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 

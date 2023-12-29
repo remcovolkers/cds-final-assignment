@@ -1,10 +1,10 @@
 package datastructures;
 
-import static org.junit.Assert.*;
-
 import models.Station;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class RemcoHashMapTest {
     private RemcoHashMap<String, Station> map;

@@ -2,8 +2,8 @@ package core;
 
 import datastructures.Graph;
 import datastructures.RemcoList;
-import models.Track;
 import models.Station;
+import models.Track;
 import utils.DataLoader;
 
 import java.util.ArrayList;

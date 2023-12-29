@@ -5,13 +5,12 @@ import models.Station;
 import models.Track;
 import org.junit.Before;
 import org.junit.Test;
-import utils.DataLoader;
-
-import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.junit.Assert.*;
 
 public class DataLoaderTest {
     private ArrayList<Station> stations;

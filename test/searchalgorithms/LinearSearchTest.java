@@ -4,7 +4,6 @@ import datastructures.RemcoList;
 import models.Station;
 import org.junit.Before;
 import org.junit.Test;
-import searchalgorithms.LinearSearch;
 
 import static org.junit.Assert.*;
 

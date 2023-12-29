@@ -2,8 +2,8 @@ package commands;
 
 import core.ApplicationData;
 import datastructures.RemcoBST;
-import datastructures.RemcoList;
 import datastructures.RemcoHashMap;
+import datastructures.RemcoList;
 import models.Station;
 import searchalgorithms.BinarySearch;
 import searchalgorithms.LinearSearch;
