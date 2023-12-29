@@ -50,7 +50,7 @@ public class RemcoList<T> {
             }
             current = current.next; // geen return? go next
         }
-        return null; // return null als geen match
+        return null; // return null zonder match
     }
 
     public T remove(T value) {

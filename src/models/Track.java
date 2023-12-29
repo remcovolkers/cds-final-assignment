@@ -39,6 +39,4 @@ public class Track {
                 ", binnenland?=" + binnenland +
                 '}';
     }
-
-
 }

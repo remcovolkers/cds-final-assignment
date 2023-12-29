@@ -3,10 +3,7 @@ package datastructures;
 import models.Station;
 import models.Track;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Graph {
     private final Map<String, List<Track>> adjList;
@@ -32,6 +29,18 @@ public class Graph {
 
     public Station getStation(String code) {
         return stationsMap.get(code);
+    }
+
+    public Collection<Station> getStations() {
+        return stationsMap.values();
+    }
+
+    public List<Track> getAllTracks() {
+        List<Track> allTracks = new ArrayList<>();
+        for (List<Track> tracks : adjList.values()) {
+            allTracks.addAll(tracks);
+        }
+        return allTracks;
     }
 
     public String toGraphViz() {

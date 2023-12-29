@@ -18,7 +18,12 @@ public class Station implements Comparable<Station> {
             double geoLat,
             double geoLng) {
         this.code = code;
-        this.fullName = fullName;
+        //waarom moeten WIJ een station delen met die Lichtenvoordsen!!
+        if (fullName.equalsIgnoreCase("Lichtenvoorde-Groenlo")) {
+            this.fullName = "Grolle B-)";
+        } else {
+            this.fullName = fullName;
+        }
         this.slug = slug;
         this.country = country;
         this.type = type;
@@ -26,11 +31,6 @@ public class Station implements Comparable<Station> {
         this.geoLng = geoLng;
     }
 
-
-    @Override
-    public String toString() {
-        return "Station {" + fullName + ", code: " + code + "}";
-    }
 
     public String getCode() {
         return code;
@@ -59,5 +59,15 @@ public class Station implements Comparable<Station> {
     @Override
     public int compareTo(Station other) {
         return this.code.compareTo(other.code);
+    }
+
+    @Override
+    public String toString() {
+        return "Station{\n" +
+                "\tfullName: " + fullName +
+                ",\n\tcode: " + code +
+                ",\n\tgeoLat: " + geoLat +
+                ",\n\tgeoLng: " + geoLng +
+                "\n}";
     }
 }
