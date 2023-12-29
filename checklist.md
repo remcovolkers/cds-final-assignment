@@ -24,7 +24,7 @@
 - [x] Binaire zoekboom (BST of AVL-tree)
 - [x] Hashtabel met stationscode als sleutel
 - [x] MinHeap op basis van een array
-- [ ] DFS- of BFS-algoritme voor "de rechthoek" functionaliteit
+- [x] DFS- of BFS-algoritme voor "de rechthoek" functionaliteit
 - [ ] Dijkstra en A* algoritmen voor kortste route
 - [x] Regular Expressions voor CSV-bestand validatie
 - [ ] Testen met minimaal 75% code coverage (class, method, line en branch)
@@ -34,7 +34,7 @@
 - [x] Zoeken van een station (lineair en binair)
 - [x] Sorteren van verbindingen (tweemaal)
 - [ ] Bepalen van de kortste route via stationnamen of -codes
-- [ ] Bepalen van de MCST via stationnamen of -codes binnen een rechthoek
+- [x] Bepalen van de MCST via stationnamen of -codes binnen een rechthoek
 - [ ] Optioneel: Grafisch tonen van de kortste route of de MCST
 
 ## Datastructuur Methodes

@@ -32,8 +32,8 @@ public class RemcoMinHeapTest {
         minHeap.add(2);
         minHeap.add(1);
         minHeap.add(9);
-        assertEquals(Integer.valueOf(1), minHeap.remove());
-        assertEquals(Integer.valueOf(2), minHeap.remove());
+        assertEquals(Integer.valueOf(1), minHeap.pop());
+        assertEquals(Integer.valueOf(2), minHeap.pop());
         assertEquals(Integer.valueOf(4), minHeap.peek());
     }
 
@@ -47,6 +47,6 @@ public class RemcoMinHeapTest {
     @Test(expected = IllegalStateException.class)
     public void testRemoveFromEmptyHeap() {
         assertTrue(minHeap.isEmpty());
-        minHeap.remove();
+        minHeap.pop();
     }
 }

@@ -1,6 +1,7 @@
 package commands;
 
 import advancedalgorithms.BFSAlgorithm;
+import advancedalgorithms.DijkstraAlgorithm;
 import advancedalgorithms.PrimAlgorithm;
 import core.ApplicationData;
 import datastructures.Graph;
@@ -109,8 +110,51 @@ public class AdvancedAlgorithmsCommand implements Command {
 
     private void printRoutePlanningStationToStation() {
         System.out.println("Voer de stationscode in van het startstation (bv. LTV):");
-        String startStation = scanner.nextLine();
+        String startStationCode = scanner.nextLine();
         System.out.println("Voer de stationscode in van het eindstation (bv. LC):");
-        String eindStation = scanner.nextLine();
+        String endStationCode = scanner.nextLine();
+
+        // Zoek de Station objecten die overeenkomen met de gegeven codes
+        Station startStation = appData.spoorwegNetwerk.getStation(startStationCode);
+        Station endStation = appData.spoorwegNetwerk.getStation(endStationCode);
+
+        if (startStation == null || endStation == null) {
+            System.out.println("Een of beide stations zijn niet gevonden in het netwerk.");
+            return;
+        }
+
+        // Voer Dijkstra's algoritme uit
+        DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(appData.spoorwegNetwerk);
+        dijkstra.execute(startStation);
+
+        // Haal de kortste afstand en het pad op
+        Double distance = dijkstra.getDistances().get(endStation);
+        LinkedList<Station> path = getPath(dijkstra.getPrevious(), endStation);
+
+        // Toon de resultaten
+        System.out.println("De kortste route van " + startStation.getFullName() +
+                " naar " + endStation.getFullName() + " is " + distance + " km.");
+        System.out.print("Route: ");
+        path.forEach(station -> System.out.print(station.getFullName() + " -> "));
+        System.out.println("Einde");
+    }
+
+    // Deze methode reconstrueert het pad van de eindstation tot de startstation
+    private LinkedList<Station> getPath(Map<Station, Station> previous, Station endStation) {
+        LinkedList<Station> path = new LinkedList<>();
+        Station step = endStation;
+
+        // Controleer of een pad bestaat
+        if (previous.get(step) == null) {
+            return path;
+        }
+        path.add(step);
+        while (previous.get(step) != null) {
+            step = previous.get(step);
+            path.add(step);
+        }
+        // Om het pad van start naar eind te krijgen, moeten we de lijst omkeren
+        Collections.reverse(path);
+        return path;
     }
 }
