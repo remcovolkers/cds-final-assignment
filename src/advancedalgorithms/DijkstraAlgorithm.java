@@ -9,26 +9,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DijkstraAlgorithm {
-    private final Graph graph;
-    private final Map<Station, Double> distances;
-    private final Map<Station, Station> previous;
+    private final Graph graaf;
+    private final Map<Station, Double> afstanden;
+    private final Map<Station, Station> vorige;
     private final DijkstraMinHeap minHeap;
 
-    public DijkstraAlgorithm(Graph graph) {
-        this.graph = graph;
-        this.distances = new HashMap<>();
-        this.previous = new HashMap<>();
+    public DijkstraAlgorithm(Graph graaf) {
+        this.graaf = graaf;
+        this.afstanden = new HashMap<>();
+        this.vorige = new HashMap<>();
         this.minHeap = new DijkstraMinHeap();
     }
 
     public void execute(Station startStation) {
-        for (Station station : graph.getStations()) {
-            distances.put(station, Double.MAX_VALUE);
-            previous.put(station, null);
+        for (Station station : graaf.getStations()) {
+            afstanden.put(station, Double.MAX_VALUE);
+            vorige.put(station, null);
             minHeap.add(new StationDistancePair(station, Double.MAX_VALUE));
         }
 
-        distances.put(startStation, 0.0);
+        afstanden.put(startStation, 0.0);
         minHeap.decreaseKey(startStation, 0.0);
 
         while (!minHeap.isEmpty()) {
@@ -36,25 +36,25 @@ public class DijkstraAlgorithm {
             Station currentStation = stationDistancePair.station();
             double distance = stationDistancePair.distance();
 
-            for (Track track : graph.getAdjacentTracks(currentStation.getCode())) {
-                Station adjacentStation = track.getStationNaar();
-                double newDistance = distance + track.getDistance();
+            for (Track track : graaf.getAanliggendeTracks(currentStation.getStationsCode())) {
+                Station aanliggendStation = track.getStationNaar();
+                double nieuweAfstand = distance + track.getDistance();
 
-                if (newDistance < distances.get(adjacentStation)) {
-                    distances.put(adjacentStation, newDistance);
-                    previous.put(adjacentStation, currentStation);
-                    minHeap.decreaseKey(adjacentStation, newDistance);
+                if (nieuweAfstand < afstanden.get(aanliggendStation)) {
+                    afstanden.put(aanliggendStation, nieuweAfstand);
+                    vorige.put(aanliggendStation, currentStation);
+                    minHeap.decreaseKey(aanliggendStation, nieuweAfstand);
                 }
             }
         }
     }
 
-    public Map<Station, Double> getDistances() {
-        return distances;
+    public Map<Station, Double> getAfstanden() {
+        return afstanden;
     }
 
-    public Map<Station, Station> getPrevious() {
-        return previous;
+    public Map<Station, Station> getVorige() {
+        return vorige;
     }
 
     public record StationDistancePair(Station station, Double distance) implements Comparable<StationDistancePair> {

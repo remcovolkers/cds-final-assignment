@@ -25,13 +25,13 @@ public class SortCommand implements Command {
         System.out.println("1. Insertion Sort");
         System.out.println("2. Quick Sort");
 
-        String choice = scanner.nextLine();
-        switch (choice) {
+        String invoer = scanner.nextLine();
+        switch (invoer) {
             case "1":
-                performInsertionSort();
+                insertionSortUitvoering();
                 break;
             case "2":
-                performQuickSort();
+                quickSortUitvoering();
                 break;
             default:
                 System.out.println("Ongeldige keuze.");
@@ -39,27 +39,29 @@ public class SortCommand implements Command {
         }
     }
 
-    private void performInsertionSort() {
-        List<Station> stationsToSort = new ArrayList<>(appData.getStations());
+    List<Station> insertionSortUitvoering() {
+        List<Station> gesorteerdeStations = new ArrayList<>(appData.getStations());
         System.out.println("Sorteren van stations met InsertionSort...");
 
-        long startTime = System.nanoTime();
-        InsertionSort.insertionSort(stationsToSort);
-        long endTime = System.nanoTime();
+        long startTijd = System.nanoTime();
+        InsertionSort.insertionSort(gesorteerdeStations);
+        long eindTijd = System.nanoTime();
 
-        System.out.println("InsertionSort voltooid in " + ((endTime - startTime) / 1_000_000) + " milliseconden.");
-        stationsToSort.stream().limit(5).forEach(station -> System.out.println(station.getCode()));
+        System.out.println("InsertionSort voltooid in " + ((eindTijd - startTijd) / 1_000_000) + " milliseconden.");
+        gesorteerdeStations.stream().limit(5).forEach(station -> System.out.println(station.getStationsCode()));
+        return gesorteerdeStations;
     }
 
-    private void performQuickSort() {
-        List<Station> stationsToSort = new ArrayList<>(appData.getStations());
+    List<Station> quickSortUitvoering() {
+        List<Station> gesorteerdeStations = new ArrayList<>(appData.getStations());
         System.out.println("Sorteren van stations met QuickSort...");
 
-        long startTime = System.nanoTime();
-        QuickSort.quickSort(stationsToSort, 0, stationsToSort.size() - 1);
-        long endTime = System.nanoTime();
+        long startTijd = System.nanoTime();
+        QuickSort.quickSort(gesorteerdeStations, 0, gesorteerdeStations.size() - 1);
+        long eindTijd = System.nanoTime();
 
-        System.out.println("QuickSort voltooid in " + ((endTime - startTime) / 1_000_000) + " milliseconden.");
-        stationsToSort.stream().limit(5).forEach(station -> System.out.println(station.getCode()));
+        System.out.println("QuickSort voltooid in " + ((eindTijd - startTijd) / 1_000_000) + " milliseconden.");
+        gesorteerdeStations.stream().limit(5).forEach(station -> System.out.println(station.getStationsCode()));
+        return gesorteerdeStations;
     }
 }

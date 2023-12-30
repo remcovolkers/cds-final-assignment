@@ -31,19 +31,27 @@ public class SearchCommand implements Command {
         System.out.println("3. Hashmap Search");
         System.out.println("4. BST Search");
 
-        String choice = scanner.nextLine();
-        switch (choice) {
+        String invoer = scanner.nextLine();
+        switch (invoer) {
             case "1":
-                performBinarySearch();
+                System.out.println("Voer de stationscode in voor Binary Search:");
+                String codeBinair = scanner.nextLine();
+                binairZoeken(codeBinair);
                 break;
             case "2":
-                performLinearSearch();
+                System.out.println("Voer de stationscode in voor Linear Search:");
+                String codeLineair = scanner.nextLine();
+                lineairZoeken(codeLineair);
                 break;
             case "3":
-                performHashMapSearch();
+                System.out.println("Voer de stationscode in voor HashMap Search:");
+                String codeHashMap = scanner.nextLine();
+                hashMapZoeken(codeHashMap);
                 break;
             case "4":
-                performBSTSearch();
+                System.out.println("Voer de stationscode in voor BST Search:");
+                String codeBST = scanner.nextLine();
+                bstZoeken(codeBST);
                 break;
             default:
                 System.out.println("Ongeldige keuze.");
@@ -52,83 +60,80 @@ public class SearchCommand implements Command {
     }
 
 
-    private void performBinarySearch() {
-        System.out.println("Voer de stationscode in voor Binary Search:");
-        String code = scanner.nextLine();
-        SearchAlgorithm<List<Station>> binarySearch = new BinarySearch();
-        List<Station> stationsList = appData.getStations();
-        stationsList.sort(Comparator.comparing(Station::getCode));
-        Station foundStation = binarySearch.search(stationsList, code);
-        if (foundStation != null) {
-            System.out.println("Station gevonden: " + foundStation.getFullName());
+    Station binairZoeken(String stationsCode) {
+        SearchAlgorithm<List<Station>> binairZoeken = new BinarySearch();
+        List<Station> stations = appData.getStations();
+        stations.sort(Comparator.comparing(Station::getStationsCode));
+        Station gevondenStation = binairZoeken.search(stations, stationsCode);
+        if (gevondenStation != null) {
+            System.out.println("Station gevonden: " + gevondenStation.getNaamVolledig());
+            return gevondenStation;
         } else {
             System.out.println("Station niet gevonden.");
         }
+        return null;
     }
 
-    private void performLinearSearch() {
-        System.out.println("Voer de stationscode in voor Linear Search:");
-        String code = scanner.nextLine();
-        SearchAlgorithm<RemcoList<Station>> linearSearch = new LinearSearch();
+    Station lineairZoeken(String stationsCode) {
+        SearchAlgorithm<RemcoList<Station>> lineairZoeken = new LinearSearch();
         RemcoList<Station> stationsList = appData.getStationsRemcoList();
-        Station foundStation = linearSearch.search(stationsList, code);
-        if (foundStation != null) {
-            System.out.println("Station gevonden: " + foundStation.getFullName());
+        Station gevondenStation = lineairZoeken.search(stationsList, stationsCode);
+        if (gevondenStation != null) {
+            System.out.println("Station gevonden: " + gevondenStation.getNaamVolledig());
+            return gevondenStation;
         } else {
             System.out.println("Station niet gevonden.");
         }
+        return null;
     }
 
-    private void performHashMapSearch() {
-        System.out.println("Voer de stationscode in voor HashMap Search:");
-        String code = scanner.nextLine();
+    Station hashMapZoeken(String stationsCode) {
         RemcoHashMap<String, Station> hashMap = new RemcoHashMap<>();
 
         //Vul hashmap
         for (Station station : appData.getStations()) {
-            hashMap.put(station.getCode(), station);
+            hashMap.put(station.getStationsCode(), station);
         }
 
         // Tijdmeting starten
-        long startTimeHashMap = System.nanoTime();
-        Station foundStationHashMap = hashMap.get(code.toUpperCase());
+        long startTijdZoekenHashmap = System.nanoTime();
+        Station foundStation = hashMap.get(stationsCode.toUpperCase());
         // Tijdmeting beëindigen
-        long endTimeHashMap = System.nanoTime();
+        long eindTijdZoekenHashmap = System.nanoTime();
         // Bereken de duur in nanoseconden
-        long durationInNanoHashMap = (endTimeHashMap - startTimeHashMap);
+        long duurHashmapZoekActieNano = (eindTijdZoekenHashmap - startTijdZoekenHashmap);
 
-        if (foundStationHashMap != null) {
-            System.out.println("Station gevonden: " + foundStationHashMap.getFullName() +
-                    " in " + durationInNanoHashMap + " nanoseconden.");
+        if (foundStation != null) {
+            System.out.println("Station gevonden: " + foundStation.getNaamVolledig() +
+                    " in " + duurHashmapZoekActieNano + " nanoseconden.");
+            return foundStation;
         } else {
-            System.out.println("Station niet gevonden. Zoektijd: " + durationInNanoHashMap + " nanoseconden.");
+            System.out.println("Station niet gevonden. Zoektijd: " + duurHashmapZoekActieNano + " nanoseconden.");
         }
+        return null;
     }
 
 
-    private void performBSTSearch() {
-        System.out.println("Voer de stationscode in voor BST Search:");
-        String code = scanner.nextLine();
+    Station bstZoeken(String code) {
         RemcoBST bst = new RemcoBST();
-
         for (Station station : appData.getStations()) {
             bst.add(station);
         }
-
         // Tijdmeting starten
-        long startTimeBST = System.nanoTime();
-        Station foundStationBST = bst.findByCode(code.toUpperCase());
+        long startTijdBSTZoeken = System.nanoTime();
+        Station foundStation = bst.vindMetCode(code.toUpperCase());
         // Tijdmeting beëindigen
-        long endTimeBST = System.nanoTime();
+        long eindTijdBSTZoeken = System.nanoTime();
         // Bereken de duur in nanoseconden
-        long durationInNanoBST = (endTimeBST - startTimeBST);
+        long duurZoekActieBSTNano = (eindTijdBSTZoeken - startTijdBSTZoeken);
 
-        if (foundStationBST != null) {
-            System.out.println("Station gevonden: " + foundStationBST.getFullName() +
-                    " in " + durationInNanoBST + " nanoseconden.");
+        if (foundStation != null) {
+            System.out.println("Station gevonden: " + foundStation.getNaamVolledig() +
+                    " in " + duurZoekActieBSTNano + " nanoseconden.");
+            return foundStation;
         } else {
-            System.out.println("Station niet gevonden. Zoektijd: " + durationInNanoBST + " nanoseconden.");
+            System.out.println("Station niet gevonden. Zoektijd: " + duurZoekActieBSTNano + " nanoseconden.");
         }
-
+        return null;
     }
 }

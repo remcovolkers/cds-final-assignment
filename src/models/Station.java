@@ -1,43 +1,43 @@
 package models;
 
 public class Station implements Comparable<Station> {
-    private final String code;
-    private final String fullName;
+    private final String stationsCode;
+    private final String volledigeNaam;
     private final String slug;
-    private final String country;
+    private final String land;
     private final String type;
     private final double geoLat;
     private final double geoLng;
 
     public Station(
-            String code,
-            String fullName,
+            String stationsCode,
+            String volledigeNaam,
             String slug,
-            String country,
+            String land,
             String type,
             double geoLat,
             double geoLng) {
-        this.code = code;
+        this.stationsCode = stationsCode;
         //waarom moeten WIJ een station delen met die Lichtenvoordsen!!
-        if (fullName.equalsIgnoreCase("Lichtenvoorde-Groenlo")) {
-            this.fullName = "Grolle B-)";
+        if (volledigeNaam.equalsIgnoreCase("Lichtenvoorde-Groenlo")) {
+            this.volledigeNaam = "Grolle B-)";
         } else {
-            this.fullName = fullName;
+            this.volledigeNaam = volledigeNaam;
         }
         this.slug = slug;
-        this.country = country;
+        this.land = land;
         this.type = type;
         this.geoLat = geoLat;
         this.geoLng = geoLng;
     }
 
 
-    public String getCode() {
-        return code;
+    public String getStationsCode() {
+        return stationsCode;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getNaamVolledig() {
+        return volledigeNaam;
     }
 
     public double getGeoLat() {
@@ -49,14 +49,15 @@ public class Station implements Comparable<Station> {
     }
 
     public double haversineDistanceTo(Station other) {
-        final double R = 6371.0; // Radius van de aarde in kilometers
+        //source Coordinate.java == blackboard
+        final double R = 6371.0;
         double latDistance = Math.toRadians(other.geoLat - this.geoLat);
         double lonDistance = Math.toRadians(other.geoLng - this.geoLng);
         double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
                 + Math.cos(Math.toRadians(this.geoLat)) * Math.cos(Math.toRadians(other.geoLat))
                 * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return R * c; // Retourneert de afstand in kilometers
+        return R * c;
     }
 
     @Override
@@ -64,19 +65,19 @@ public class Station implements Comparable<Station> {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Station station = (Station) obj;
-        return code.equals(station.code);
+        return stationsCode.equals(station.stationsCode);
     }
 
     @Override
     public int compareTo(Station other) {
-        return this.code.compareTo(other.code);
+        return this.stationsCode.compareTo(other.stationsCode);
     }
 
     @Override
     public String toString() {
         return "Station{\n" +
-                "\tfullName: " + fullName +
-                ",\n\tcode: " + code +
+                "\tfullName: " + volledigeNaam +
+                ",\n\tcode: " + stationsCode +
                 ",\n\tgeoLat: " + geoLat +
                 ",\n\tgeoLng: " + geoLng +
                 "\n}";

@@ -1,13 +1,17 @@
 id,code,uic,name_short,name_medium,name_long,slug,country,type,geo_lat,geo_lng
 # VALID
-557,MA,8002140,Augsburg,"Augsburg Hbf","Augsburg Hbf",augsburg-hbf,D,sneltreinstation,48.365430714393,10.88547706604
-55,AVTGV,8731896,Avignon,"Avignon TGV","Avignon TGV",avignon-tgv,F,megastation,43.92194,4.78604
+172,EML,8400216,Ermelo,Ermelo,Ermelo,ermelo,NL,stoptreinstation,52.301666259766,5.6147222518921
+391,PT,8400509,Putten,Putten,Putten,putten,NL,stoptreinstation,52.264999389648,5.5752778053284
+225,HD,8400294,Harderwijk,Harderwijk,Harderwijk,harderwijk,NL,knooppuntStoptreinstation,52.337501525879,5.619722366333
 
 # Missing Field code
-102,,8400086,Baarn,Baarn,Baarn,baarn,NL,knooppuntStoptreinstation,52.208332061768,5.2808332443237
+172,,8400216,Ermelo,Ermelo,Ermelo,ermelo,NL,stoptreinstation,52.301666259766,5.6147222518921
+
 # Invalid Country Code
-76,BH,8021156,Bentheim,"Bad Bentheim","Bad Bentheim",bad-bentheim,XX,knooppuntIntercitystation,52.309685595156,7.1585369110107
+172,EML,8400216,Ermelo,Ermelo,Ermelo,ermelo,XX,stoptreinstation,52.301666259766,5.6147222518921
+
 # Invalid Station Type
-361,NSCH,8400457,Nweschans,"Bad Nieuweschans","Bad Nieuweschans",bad-nieuweschans,NL,ONBESTAAND,53.1844,7.19937
+172,EML,8400216,Ermelo,Ermelo,Ermelo,ermelo,NL,ONBESTAAND,52.301666259766,5.6147222518921
+
 # Invalid Geographical Coordinates
-558,OEYNH,8013585,"Bad Oeynh","Bad Oeynhausen","Bad Oeynhausen",bad-oeynhausen,D,intercitystation,BEEP,BOOP
+172,EML,8400216,Ermelo,Ermelo,Ermelo,ermelo,NL,stoptreinstation,BEEP,BOOP

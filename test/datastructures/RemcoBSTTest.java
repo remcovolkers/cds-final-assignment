@@ -6,28 +6,32 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class RemcoBSTTest {
     private RemcoBST bst;
+    Station stationA = new Station("001", "Station A", "slug-a", "NL", "type-a", 50.01, 4.01);
+    Station stationB = new Station("002", "Station B", "slug-b", "NL", "type-b", 51.02, 4.02);
+    Station stationC = new Station("003", "Station C", "slug-c", "NL", "type-c", 52.03, 4.03);
+
 
     @Before
     public void setUp() {
         bst = new RemcoBST();
-        // Voeg stations toe aan bst
-    }
-
-    @Test
-    public void testFindByName() {
-        String searchName = "Station A";
-        Station stationA = new Station("001", "Station A", "slug-a", "NL", "type-a", 50.01, 4.01);
         bst.add(stationA);
-
-        assertEquals(stationA, bst.findByCode(searchName));
+        bst.add(stationB);
+        bst.add(stationC);
     }
 
     @Test
-    public void testNotFoundByName() {
-        String searchName = "Station X";
-        assertNull(bst.findByCode(searchName));
+    public void testFindByCode() {
+        String searchCode = "001";
+        assertEquals(stationA, bst.vindMetCode(searchCode));
+    }
+
+    @Test
+    public void testNotFoundByCode() {
+        String searchCode = "999";
+        assertNull(bst.vindMetCode(searchCode));
     }
 }

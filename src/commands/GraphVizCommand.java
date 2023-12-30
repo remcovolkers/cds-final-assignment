@@ -29,14 +29,14 @@ public class GraphVizCommand implements Command {
         System.out.println("1. Spoorwegnetwerk als GraphViz");
         System.out.println("2. BST als GraphViz");
 
-        String choice = scanner.nextLine();
-        switch (choice) {
+        String invoer = scanner.nextLine();
+        switch (invoer) {
             case "1":
-                performGraphToGraphViz(appData.spoorwegNetwerk.toGraphViz(), "src/assets/spoorwegnetwerk.svg");
+                graphVizGraaf(appData.spoorwegNetwerk.toGraphViz(), "src/assets/spoorwegnetwerk.svg");
                 break;
             case "2":
                 buildBST();
-                performBstToGraphViz(remcoBST.toGraphViz(), "src/assets/binary-tree.svg");
+                graphVizBST(remcoBST.toGraphViz(), "src/assets/binary-tree.svg");
                 break;
             default:
                 System.out.println("Ongeldige keuze.");
@@ -50,22 +50,23 @@ public class GraphVizCommand implements Command {
         }
     }
 
-    private void performGraphToGraphViz(String dotString, String outputPath) {
-        renderGraphViz(dotString, outputPath);
+    private void graphVizGraaf(String dotString, String locatie) {
+        renderGraphViz(dotString, locatie);
     }
 
-    private void performBstToGraphViz(String dotString, String outputPath) {
-        // Hier komt de code om de GraphViz voor de BST te renderen
-        renderGraphViz(dotString, outputPath);
+    private void graphVizBST(String dotString, String locatie) {
+        renderGraphViz(dotString, locatie);
     }
 
-    private static void renderGraphViz(String dotString, String outputPath) {
+    //code deels genomen van: https://stackoverflow.com/questions/26481910/how-to-call-graphviz-from-java
+    //memory issue opgelost door: https://github.com/nidi3/graphviz-java/issues/12
+    private static void renderGraphViz(String dotString, String locatie) {
         try {
             MutableGraph g = new Parser().read(dotString);
             Graphviz.fromGraph(g).totalMemory(1000000000)
                     .render(Format.SVG)
-                    .toFile(new File(outputPath));
-            System.out.println("Grafiek is opgeslagen als " + outputPath);
+                    .toFile(new File(locatie));
+            System.out.println("Grafiek is opgeslagen als " + locatie);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }

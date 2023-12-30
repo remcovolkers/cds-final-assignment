@@ -1,13 +1,16 @@
 # VALID
-ac,ashd,2,2,30
-acdg,marne,22,22,0
+eml,hd,4,4,30
+eml,pt,5,5,30
 
 # INVALID
 # Missing Field
-ac,,12,12,30
+eml,,4,4,30
 
 # Invalid Numeric Value
-acdg,brusz,240,xyz,0
+eml,hd,4,xyz,30
 
 # Invalid Boolean Value
-acdg,valtgv,483,483,50
+eml,hd,4,4,50
+
+#No matching station
+eml,xyz,10,10,30

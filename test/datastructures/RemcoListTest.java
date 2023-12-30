@@ -54,6 +54,6 @@ public class RemcoListTest {
     public void testGet() {
         Station station = list.get(new Station("002", "", "", "", "", 0, 0));
         assertNotNull("Should get station with code 002", station);
-        assertEquals("The retrieved station should have the code 002", "002", station.getCode());
+        assertEquals("The retrieved station should have the code 002", "002", station.getStationsCode());
     }
 }

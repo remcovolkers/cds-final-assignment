@@ -17,13 +17,13 @@ public class ApplicationData {
     Map<String, Station> stationsMap = new HashMap<>();
     public final Graph spoorwegNetwerk = new Graph();
 
-    public void init() {
-        stations = DataLoader.loadStations("src/resources/stations.csv");
+    public void init(String locatieCsvStations, String locatieCsvTracks) {
+        stations = DataLoader.loadStations(locatieCsvStations);
         for (Station station : stations) {
-            stationsMap.put(station.getCode(), station);
+            stationsMap.put(station.getStationsCode(), station);
         }
-        stations2 = DataLoader.loadStationsToRemcoList("src/resources/stations.csv");
-        tracks = DataLoader.loadTracks("src/resources/tracks.csv", stationsMap);
+        stations2 = DataLoader.laadStationsNaarRemcoList(locatieCsvStations);
+        tracks = DataLoader.loadTracks(locatieCsvTracks, stationsMap);
         buildGraph();
     }
 
@@ -41,8 +41,8 @@ public class ApplicationData {
         }
 
         for (Track track : tracks) {
-            Station stationVan = spoorwegNetwerk.getStation(track.getStationVan().getCode());
-            Station stationNaar = spoorwegNetwerk.getStation(track.getStationNaar().getCode());
+            Station stationVan = spoorwegNetwerk.getStation(track.getStationVan().getStationsCode());
+            Station stationNaar = spoorwegNetwerk.getStation(track.getStationNaar().getStationsCode());
             if (stationVan != null && stationNaar != null) {
                 spoorwegNetwerk.addTrack(track);
             }

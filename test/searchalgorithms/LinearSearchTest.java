@@ -42,7 +42,7 @@ public class LinearSearchTest {
     public void testSearchFound() {
         Station result = linearSearch.search(stations, "002");
         assertNotNull("Het station moet worden gevonden", result);
-        assertEquals("De code van het gevonden station moet '002' zijn", "002", result.getCode());
+        assertEquals("De code van het gevonden station moet '002' zijn", "002", result.getStationsCode());
     }
 
     @Test
@@ -62,10 +62,10 @@ public class LinearSearchTest {
     public void testSearchAtBoundaries() {
         Station resultFirst = linearSearch.search(stations, "001");
         assertNotNull("Het eerste station moet worden gevonden", resultFirst);
-        assertEquals("De code van het eerste station moet '001' zijn", "001", resultFirst.getCode());
+        assertEquals("De code van het eerste station moet '001' zijn", "001", resultFirst.getStationsCode());
 
         Station resultLast = linearSearch.search(stations, "003");
         assertNotNull("Het laatste station moet worden gevonden", resultLast);
-        assertEquals("De code van het laatste station moet '003' zijn", "003", resultLast.getCode());
+        assertEquals("De code van het laatste station moet '003' zijn", "003", resultLast.getStationsCode());
     }
 }

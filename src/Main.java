@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ApplicationData appData = new ApplicationData();
-        appData.init();
+        appData.init("src/resources/stations.csv", "src/resources/tracks.csv");
 
         System.out.println("\nWelkom bij de Spoormanager-applicatie!\n");
 

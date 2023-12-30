@@ -27,20 +27,30 @@ public class GraphTest {
     }
 
     @Test
-    public void testGetAdjacentTracks() {
-        List<Track> adjacentTracks = graph.getAdjacentTracks("STA");
-        assertNotNull(adjacentTracks);
-        assertFalse(adjacentTracks.isEmpty());
+    public void testAddAndGetStations() {
+        assertEquals("Aantal stations komt niet overeen", 2, graph.getStations().size());
+        assertNotNull("Station STA moet aanwezig zijn", graph.getStation("STA"));
+        assertNotNull("Station STB moet aanwezig zijn", graph.getStation("STB"));
+    }
 
-        // Verifieer dat de lijst een track bevat van Station A naar Station B
-        Track track = adjacentTracks.getFirst();
-        assertEquals("STB", track.getStationNaar().getCode());
+    @Test
+    public void testGetAllTracks() {
+        List<Track> allTracks = graph.getAlleTracks();
+        assertNotNull("Tracks lijst mag niet null zijn", allTracks);
+        assertFalse("Tracks lijst mag niet leeg zijn", allTracks.isEmpty());
+        assertEquals("Aantal tracks komt niet overeen", 1, allTracks.size());
+    }
 
-        // Test de omgekeerde route van Station B naar Station A
-        List<Track> reverseTracks = graph.getAdjacentTracks("STB");
-        assertNotNull(reverseTracks);
-        assertFalse(reverseTracks.isEmpty());
-        Track reverseTrack = reverseTracks.getFirst();
-        assertEquals("STA", reverseTrack.getStationNaar().getCode());
+    @Test
+    public void testToGraphVizFormat() {
+        String graphViz = graph.toGraphViz();
+        assertTrue("GraphViz string moet de verbinding bevatten", graphViz.contains("\"STA\" -> \"STB\""));
+    }
+
+    @Test
+    public void testToString() {
+        String description = graph.toString();
+        assertTrue("Beschrijving moet aantal stations bevatten", description.contains("2 stations"));
+        assertTrue("Beschrijving moet aantal verbindingen bevatten", description.contains("1 verbindingen"));
     }
 }

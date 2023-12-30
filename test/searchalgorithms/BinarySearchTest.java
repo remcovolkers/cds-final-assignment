@@ -40,7 +40,7 @@ public class BinarySearchTest {
                 50.05,
                 50.06));
 
-        stations.sort(Comparator.comparing(Station::getCode));
+        stations.sort(Comparator.comparing(Station::getStationsCode));
     }
 
     @Test
@@ -48,7 +48,7 @@ public class BinarySearchTest {
         // Test een situatie waarbij het item wordt gevonden
         Station result = binarySearch.search(stations, "002");
         assertNotNull("Het station moet worden gevonden", result);
-        assertEquals("De code van het gevonden station moet '002' zijn", "002", result.getCode());
+        assertEquals("De code van het gevonden station moet '002' zijn", "002", result.getStationsCode());
     }
 
     @Test
@@ -70,11 +70,11 @@ public class BinarySearchTest {
         // Test zoeken naar items aan de uiteinden van de lijst
         Station resultFirst = binarySearch.search(stations, "001");
         assertNotNull("Het eerste station moet worden gevonden", resultFirst);
-        assertEquals("De code van het eerste station moet '001' zijn", "001", resultFirst.getCode());
+        assertEquals("De code van het eerste station moet '001' zijn", "001", resultFirst.getStationsCode());
 
         Station resultLast = binarySearch.search(stations, "003");
         assertNotNull("Het laatste station moet worden gevonden", resultLast);
-        assertEquals("De code van het laatste station moet '003' zijn", "003", resultLast.getCode());
+        assertEquals("De code van het laatste station moet '003' zijn", "003", resultLast.getStationsCode());
     }
 }
 

@@ -1,5 +1,6 @@
 package models;
 
+// Source: blackboard
 public record Coordinate(double latitude, double longitude) {
     /**
      * Calculate the distance in kilometers between this and another coordinates using the Haversine formula.

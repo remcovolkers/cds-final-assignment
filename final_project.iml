@@ -20,5 +20,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="guru.nidi.graphviz.java" level="project" />
+    <orderEntry type="library" name="bluecatcode.mockito.1.10.19.extended" level="project" />
   </component>
 </module>

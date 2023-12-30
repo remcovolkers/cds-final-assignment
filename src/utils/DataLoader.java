@@ -33,7 +33,7 @@ public class DataLoader {
         return stations;
     }
 
-    public static RemcoList<Station> loadStationsToRemcoList(String filePath) {
+    public static RemcoList<Station> laadStationsNaarRemcoList(String filePath) {
         RemcoList<Station> stations = new RemcoList<>();
         //duplicate code is jammer maar helaas, wordt onleesbaar met generieke oplossing, i tried
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -69,28 +69,27 @@ public class DataLoader {
             String line;
             while ((line = br.readLine()) != null) {
                 if (line.startsWith("#") || line.isEmpty()) {
+                    System.out.println("Overslaan (Commentaar of lege regel): " + line);
                     continue;  // Sla commentaar en lege regels over
                 }
                 Matcher matcher = pattern.matcher(line);
                 if (matcher.matches()) {
-
                     String stationVanCode = matcher.group(1);
                     String stationNaarCode = matcher.group(2);
 
-                    // dit is kapot
                     Station stationVan = stationsMap.get(stationVanCode.toUpperCase());
-
                     Station stationNaar = stationsMap.get(stationNaarCode.toUpperCase());
 
                     if (stationVan == null || stationNaar == null) {
+                        System.out.println("Station niet gevonden voor regel: " + line);
                         continue; // Station niet gevonden, ga door naar de volgende regel
                     }
 
-                    //30 betekent binnenlandse rit
                     boolean binnenland = Integer.parseInt(matcher.group(3)) == 30;
-
                     Track track = new Track(stationVan, stationNaar, binnenland);
                     tracks.add(track);
+                } else {
+                    System.out.println("Regel voldoet niet aan patroon: " + line);
                 }
             }
         } catch (IOException e) {

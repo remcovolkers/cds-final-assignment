@@ -7,58 +7,55 @@ import models.Track;
 import java.util.*;
 
 public class AStarAlgorithm {
-    private final Graph graph;
-    private final Map<Station, Double> gScores; // Kosten van start tot huidige knoop
-    private final Map<Station, Double> fScores; // Geschatte kosten van start via huidige knoop naar doel
-    private final Map<Station, Station> cameFrom;
-    private final PriorityQueue<StationDistancePair> openSet;
-    private final Station endStation;
+    private final Graph graaf;
+    private final Map<Station, Double> goedkoopstePad;
+    private final Map<Station, Double> huidigGoedkoopstePad;
+    private final Map<Station, Station> afkomstigVan;
+    private final PriorityQueue<StationDistancePair> teBezoekenStations;
+    private final Station eindStation;
     private final ArrayList<Track> tracks;
 
 
-    public AStarAlgorithm(Graph graph, Station endStation, ArrayList<Track> tracks) {
-        this.graph = graph;
-        this.endStation = endStation;
+    public AStarAlgorithm(Graph graaf, Station eindStation, ArrayList<Track> tracks) {
+        this.graaf = graaf;
+        this.eindStation = eindStation;
         this.tracks = tracks;
-        this.gScores = new HashMap<>();
-        this.fScores = new HashMap<>();
-        this.cameFrom = new HashMap<>();
-        this.openSet = new PriorityQueue<>(Comparator.comparingDouble(StationDistancePair::distance));
+        this.goedkoopstePad = new HashMap<>();
+        this.huidigGoedkoopstePad = new HashMap<>();
+        this.afkomstigVan = new HashMap<>();
+        this.teBezoekenStations = new PriorityQueue<>(Comparator.comparingDouble(StationDistancePair::distance));
     }
 
-    // Deze methode moet de heuristiek implementeren
-    private double heuristic(Station currentStation) {
-        // Als je een directe track hebt van het huidige station naar het eindstation
-        Track directTrack = findDirectTrack(currentStation, endStation);
-        if (directTrack != null) {
-            return directTrack.getDistance();
-        }
 
-        // Geen directe track, gebruik een andere methode (bijv. Haversine) voor een schatting
-        return currentStation.haversineDistanceTo(endStation);
+    private double heuristiek(Station huidigStation) {
+        Track directeVerbinding = vindDirecteVerbinding(huidigStation, eindStation);
+        if (directeVerbinding != null) {
+            return directeVerbinding.getDistance();
+        }
+        return huidigStation.haversineDistanceTo(eindStation);
     }
 
     public List<Station> execute(Station startStation) {
-        gScores.put(startStation, 0.0);
-        fScores.put(startStation, heuristic(startStation));
-        openSet.add(new StationDistancePair(startStation, fScores.get(startStation)));
+        goedkoopstePad.put(startStation, 0.0);
+        huidigGoedkoopstePad.put(startStation, heuristiek(startStation));
+        teBezoekenStations.add(new StationDistancePair(startStation, huidigGoedkoopstePad.get(startStation)));
 
-        while (!openSet.isEmpty()) {
-            Station current = openSet.poll().station();
-            if (current.equals(endStation)) {
-                return reconstructPath();
+        while (!teBezoekenStations.isEmpty()) {
+            Station current = teBezoekenStations.poll().station();
+            if (current.equals(eindStation)) {
+                return herleidPad();
             }
 
-            for (Track track : graph.getAdjacentTracks(current.getCode())) {
+            for (Track track : graaf.getAanliggendeTracks(current.getStationsCode())) {
                 Station neighbor = track.getStationNaar();
-                double tentativeGScore = gScores.get(current) + track.getDistance();
+                double tentativeGScore = goedkoopstePad.get(current) + track.getDistance();
 
-                if (tentativeGScore < gScores.getOrDefault(neighbor, Double.MAX_VALUE)) {
-                    cameFrom.put(neighbor, current);
-                    gScores.put(neighbor, tentativeGScore);
-                    fScores.put(neighbor, tentativeGScore + heuristic(neighbor));
-                    if (!openSet.contains(new StationDistancePair(neighbor, fScores.get(neighbor)))) {
-                        openSet.add(new StationDistancePair(neighbor, fScores.get(neighbor)));
+                if (tentativeGScore < goedkoopstePad.getOrDefault(neighbor, Double.MAX_VALUE)) {
+                    afkomstigVan.put(neighbor, current);
+                    goedkoopstePad.put(neighbor, tentativeGScore);
+                    huidigGoedkoopstePad.put(neighbor, tentativeGScore + heuristiek(neighbor));
+                    if (!teBezoekenStations.contains(new StationDistancePair(neighbor, huidigGoedkoopstePad.get(neighbor)))) {
+                        teBezoekenStations.add(new StationDistancePair(neighbor, huidigGoedkoopstePad.get(neighbor)));
                     }
                 }
             }
@@ -66,10 +63,10 @@ public class AStarAlgorithm {
         return new ArrayList<>();
     }
 
-    private Track findDirectTrack(Station fromStation, Station toStation) {
+    private Track vindDirecteVerbinding(Station vanStation, Station naarStation) {
         // Zoek een directe track tussen de twee stations, indien beschikbaar
         for (Track track : tracks) {
-            if (track.getStationVan().equals(fromStation) && track.getStationNaar().equals(toStation)) {
+            if (track.getStationVan().equals(vanStation) && track.getStationNaar().equals(naarStation)) {
                 return track;
             }
         }
@@ -77,23 +74,22 @@ public class AStarAlgorithm {
     }
 
 
-    // Deze methode reconstrueert het pad van het eindstation tot het startstation
-    private List<Station> reconstructPath() {
-        LinkedList<Station> path = new LinkedList<>();
-        Station current = endStation;
-        while (current != null) {
-            path.addFirst(current);
-            current = cameFrom.get(current);
+    // herleid pad startstation naar eindstation
+    private List<Station> herleidPad() {
+        LinkedList<Station> pad = new LinkedList<>();
+        Station huidigStation = eindStation;
+        while (huidigStation != null) {
+            pad.addFirst(huidigStation);
+            huidigStation = afkomstigVan.get(huidigStation);
         }
-        return path;
+        return pad;
     }
 
 
-    public Map<Station, Station> getCameFrom() {
-        return cameFrom;
+    public Map<Station, Station> getAfkomstigVan() {
+        return afkomstigVan;
     }
 
-    // Deze klasse combineert een station met zijn fScore voor de PriorityQueue
     public record StationDistancePair(Station station, Double distance) implements Comparable<StationDistancePair> {
         @Override
         public int compareTo(StationDistancePair other) {

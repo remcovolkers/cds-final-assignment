@@ -4,15 +4,16 @@ import datastructures.RemcoList;
 import models.Station;
 
 public class LinearSearch implements SearchAlgorithm<RemcoList<Station>> {
+    //Inspiratie van https://www.geeksforgeeks.org/linear-search/ en vooral de sheets
     @Override
     public Station search(RemcoList<Station> stations, String searchTerm) {
-        RemcoList.Node<Station> current = stations.getHead(); // Begin bij het hoofd van de lijst
-        while (current != null) {
-            if (current.getData().getCode().equalsIgnoreCase(searchTerm)) {
+        RemcoList.Node<Station> huidigStation = stations.getHead(); // Begin bij het eerste element van de lijst
+        while (huidigStation != null) {
+            if (huidigStation.getData().getStationsCode().equalsIgnoreCase(searchTerm)) {
                 // Station gevonden
-                return current.getData();
+                return huidigStation.getData();
             }
-            current = current.getNext(); // Ga naar het volgende element
+            huidigStation = huidigStation.getNext(); // Ga naar het volgende element
         }
         // Station niet gevonden
         return null;

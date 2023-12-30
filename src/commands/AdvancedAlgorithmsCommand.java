@@ -32,13 +32,29 @@ public class AdvancedAlgorithmsCommand implements Command {
         String choice = scanner.nextLine();
         switch (choice) {
             case "1":
-                printStationsInRectangle();
+                System.out.println("Voer de coördinaten in van de linker bovenhoek (bv. 52.3,6.6):");
+                String[] linksBovenCoords = scanner.nextLine().split(",");
+                double linksBovenLat = Double.parseDouble(linksBovenCoords[0]);
+                double linksBovenLng = Double.parseDouble(linksBovenCoords[1]);
+                System.out.println("Voer de coördinaten in van de rechter onderhoek (bv. 51.9,6.9):");
+                String[] rechtsOnderCoords = scanner.nextLine().split(",");
+                double rechtsOnderLat = Double.parseDouble(rechtsOnderCoords[0]);
+                double rechtsOnderLng = Double.parseDouble(rechtsOnderCoords[1]);
+                printStationsInRechthoek(linksBovenLat, linksBovenLng, rechtsOnderLat, rechtsOnderLng);
                 break;
             case "2":
-                printRoutePlanningStationToStationDijkstra();
+                System.out.println("Voer de stationscode in van het startstation (bv. LTV):");
+                String dijkstraStart = scanner.nextLine();
+                System.out.println("Voer de stationscode in van het eindstation (bv. LC):");
+                String dijkstraEind = scanner.nextLine();
+                printRoutePlanningDijkstra(dijkstraStart, dijkstraEind);
                 break;
             case "3":
-                printRoutePlanningStationToStationAStar();
+                System.out.println("Voer de stationscode in van het startstation (bv. LTV):");
+                String aStarStart = scanner.nextLine();
+                System.out.println("Voer de stationscode in van het eindstation (bv. LC):");
+                String aStarEind = scanner.nextLine();
+                printRoutePlanningAStar(aStarStart, aStarEind);
                 break;
             default:
                 System.out.println("Ongeldige keuze.");
@@ -46,51 +62,43 @@ public class AdvancedAlgorithmsCommand implements Command {
         }
     }
 
-    private void printStationsInRectangle() {
-        // Vraag de gebruiker om de coördinaten van de rechthoek
-        System.out.println("Voer de coördinaten in van de noordwestelijke hoek (bv. 52.3,6.6):");
-        String[] nwCornerCoords = scanner.nextLine().split(",");
-        double nwLat = Double.parseDouble(nwCornerCoords[0]);
-        double nwLng = Double.parseDouble(nwCornerCoords[1]);
-
-        System.out.println("Voer de coördinaten in van de zuidoostelijke hoek (bv. 51.9,6.9):");
-        String[] seCornerCoords = scanner.nextLine().split(",");
-        double seLat = Double.parseDouble(seCornerCoords[0]);
-        double seLng = Double.parseDouble(seCornerCoords[1]);
-
+    List<Station> printStationsInRechthoek(double linksBovenLat, double linksBovenLng, double rechtsOnderLat, double rechtsOnderLng) {
         // Bepaal welke stations binnen de rechthoek vallen
         List<Station> stationsInRechthoek = new ArrayList<>();
         for (Station station : appData.spoorwegNetwerk.getStations()) {
             double lat = station.getGeoLat();
             double lng = station.getGeoLng();
-            if (lat >= seLat && lat <= nwLat && lng >= nwLng && lng <= seLng) {
+            if (lat >= rechtsOnderLat && lat <= linksBovenLat && lng >= linksBovenLng && lng <= rechtsOnderLng) {
                 // Gevonden in rechthoek
                 stationsInRechthoek.add(station);
             }
         }
         Station startStation = null;
         if (!stationsInRechthoek.isEmpty()) {
-            startStation = stationsInRechthoek.getFirst();  // Kies bijvoorbeeld het eerste station
+            // Kies eerste station
+            startStation = stationsInRechthoek.getFirst();
         }
 
         // Voer BFS uit om alle verbonden stations te vinden
-        BFSAlgorithm bfs = new BFSAlgorithm(appData);
+        BFSAlgorithm bfs = new BFSAlgorithm(appData.spoorwegNetwerk);
         List<Station> connectedStations = bfs.bfsConnectedStations(startStation, stationsInRechthoek);
 
         // Gebruik de lijst van verbonden stations om de bijbehorende tracks te vinden
-        List<Track> tracksForMCST = findTracksForStations(connectedStations, appData.spoorwegNetwerk);
+        List<Track> tracksVoorMcst = vindTracksVerbondenStations(connectedStations, appData.spoorwegNetwerk);
 
-        // Print de minimale kostenspanningsboom
+        // Print MCST
         assert startStation != null;
-        printMinimumCostSpanningTree(tracksForMCST, startStation);
+        printMcst(tracksVoorMcst, startStation);
+
+        return stationsInRechthoek;
     }
 
-    private List<Track> findTracksForStations(List<Station> stations, Graph network) {
+    List<Track> vindTracksVerbondenStations(List<Station> stations, Graph spoorwegNetwerk) {
         List<Track> tracks = new ArrayList<>();
         for (Station station : stations) {
-            List<Track> adjacentTracks = network.getAdjacentTracks(station.getCode());
-            for (Track track : adjacentTracks) {
-                if (stations.contains(network.getStation(track.getStationNaar().getCode()))) {
+            List<Track> aanliggendeTracks = spoorwegNetwerk.getAanliggendeTracks(station.getStationsCode());
+            for (Track track : aanliggendeTracks) {
+                if (stations.contains(spoorwegNetwerk.getStation(track.getStationNaar().getStationsCode()))) {
                     tracks.add(track);
                 }
             }
@@ -98,34 +106,25 @@ public class AdvancedAlgorithmsCommand implements Command {
         return tracks;
     }
 
-    private void printMinimumCostSpanningTree(List<Track> tracks, Station startStation) {
+
+    List<Track> printMcst(List<Track> tracks, Station startStation) {
         PrimAlgorithm prim = new PrimAlgorithm(tracks);
-        List<Track> mcstTracks = prim.calculateMCST(startStation.getCode());
-
-        // Bereken de totale lengte
-        double totalLength = mcstTracks.stream().mapToDouble(Track::getDistance).sum();
-
-        // Toon de resultaten
-        System.out.println("Minimale kostenspanningsboom binnen de rechthoek:");
-        for (Track track : mcstTracks) {
-            System.out.println(track);
-        }
-        System.out.println("Totale lengte van de spoorverbindingen: " + totalLength + " km");
+        List<Track> mcstTracks = prim.berekenMcst(startStation.getStationsCode());
+        double totaleLengte = mcstTracks.stream().mapToDouble(Track::getDistance).sum();
+        System.out.println("Mcst binnen de rechthoek:");
+        mcstTracks.forEach(System.out::println);
+        System.out.println("Totale lengte van de spoorverbindingen: " + totaleLengte + " km");
+        return mcstTracks;
     }
 
-    private void printRoutePlanningStationToStationDijkstra() {
-        System.out.println("Voer de stationscode in van het startstation (bv. LTV):");
-        String startStationCode = scanner.nextLine();
-        System.out.println("Voer de stationscode in van het eindstation (bv. LC):");
-        String endStationCode = scanner.nextLine();
-
+    List<Station> printRoutePlanningDijkstra(String startStationCode, String endStationCode) {
         // Zoek de Station objecten die overeenkomen met de gegeven codes
         Station startStation = appData.spoorwegNetwerk.getStation(startStationCode);
-        Station endStation = appData.spoorwegNetwerk.getStation(endStationCode);
+        Station eindStation = appData.spoorwegNetwerk.getStation(endStationCode);
 
-        if (startStation == null || endStation == null) {
+        if (startStation == null || eindStation == null) {
             System.out.println("Een of beide stations zijn niet gevonden in het netwerk.");
-            return;
+            return null;
         }
 
         // Voer Dijkstra's algoritme uit
@@ -133,55 +132,53 @@ public class AdvancedAlgorithmsCommand implements Command {
         dijkstra.execute(startStation);
 
         // Haal de kortste afstand en het pad op
-        Double distance = dijkstra.getDistances().get(endStation);
-        LinkedList<Station> path = getPath(dijkstra.getPrevious(), endStation);
+        Double afstand = dijkstra.getAfstanden().get(eindStation);
+        LinkedList<Station> path = getPad(dijkstra.getVorige(), eindStation);
 
         // Toon de resultaten
-        System.out.println("De kortste route van " + startStation.getFullName() +
-                " naar " + endStation.getFullName() + " is " + distance + " km.");
+        System.out.println("De kortste route van " + startStation.getNaamVolledig() +
+                " naar " + eindStation.getNaamVolledig() + " is " + afstand + " km.");
         System.out.print("Route: ");
-        path.forEach(station -> System.out.print(station.getFullName() + " -> "));
+        path.forEach(station -> System.out.print(station.getNaamVolledig() + " -> "));
         System.out.println("Einde");
+        return path;
     }
 
-    private void printRoutePlanningStationToStationAStar() {
-        System.out.println("Voer de stationscode in van het startstation (bv. LTV):");
-        String startStationCode = scanner.nextLine();
-        System.out.println("Voer de stationscode in van het eindstation (bv. LC):");
-        String endStationCode = scanner.nextLine();
-
+    List<Station> printRoutePlanningAStar(String startStationCode, String endStationCode) {
         // Zoek de Station objecten die overeenkomen met de gegeven codes
         Station startStation = appData.spoorwegNetwerk.getStation(startStationCode);
-        Station endStation = appData.spoorwegNetwerk.getStation(endStationCode);
+        Station eindStation = appData.spoorwegNetwerk.getStation(endStationCode);
 
-        if (startStation == null || endStation == null) {
+        if (startStation == null || eindStation == null) {
             System.out.println("Een of beide stations zijn niet gevonden in het netwerk.");
-            return;
+            return null;
         }
 
         // Voer A* algoritme uit
-        AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(appData.spoorwegNetwerk, endStation, appData.tracks);
-        List<Station> path = aStarAlgorithm.execute(startStation);
+        AStarAlgorithm aStarAlgorithm = new AStarAlgorithm(appData.spoorwegNetwerk, eindStation, appData.tracks);
+        List<Station> pad = aStarAlgorithm.execute(startStation);
 
         // Bereken de totale afstand
-        double totalDistance = calculateTotalDistance(path);
+        double totaleAfstand = calculateTotalDistance(pad);
 
         // Toon de resultaten
-        System.out.println("De route van " + startStation.getFullName() +
-                " naar " + endStation.getFullName() + " via A* is " + totalDistance + " km.");
+        System.out.println("De route van " + startStation.getNaamVolledig() +
+                " naar " + eindStation.getNaamVolledig() + " via A* is " + totaleAfstand + " km.");
         System.out.print("Route: ");
-        path.forEach(station -> System.out.print(station.getFullName() + " -> "));
+        pad.forEach(station -> System.out.print(station.getNaamVolledig() + " -> "));
         System.out.println("Einde");
+
+        return pad;
     }
 
-    private double calculateTotalDistance(List<Station> path) {
+    private double calculateTotalDistance(List<Station> pad) {
         double totalDistance = 0.0;
-        for (int i = 0; i < path.size() - 1; i++) {
-            Station currentStation = path.get(i);
-            Station nextStation = path.get(i + 1);
+        for (int i = 0; i < pad.size() - 1; i++) {
+            Station huidigStation = pad.get(i);
+            Station volgendStation = pad.get(i + 1);
             // Vind de afstand tussen de huidige en de volgende station
-            for (Track track : appData.spoorwegNetwerk.getAdjacentTracks(currentStation.getCode())) {
-                if (track.getStationNaar().equals(nextStation)) {
+            for (Track track : appData.spoorwegNetwerk.getAanliggendeTracks(huidigStation.getStationsCode())) {
+                if (track.getStationNaar().equals(volgendStation)) {
                     totalDistance += track.getDistance();
                     break;
                 }
@@ -192,21 +189,21 @@ public class AdvancedAlgorithmsCommand implements Command {
 
 
     // Deze methode reconstrueert het pad van de eindstation tot de startstation
-    private LinkedList<Station> getPath(Map<Station, Station> previous, Station endStation) {
-        LinkedList<Station> path = new LinkedList<>();
-        Station step = endStation;
+    private LinkedList<Station> getPad(Map<Station, Station> vorige, Station eindStation) {
+        LinkedList<Station> pad = new LinkedList<>();
+        Station tussen = eindStation;
 
         // Controleer of een pad bestaat
-        if (previous.get(step) == null) {
-            return path;
+        if (vorige.get(tussen) == null) {
+            return pad;
         }
-        path.add(step);
-        while (previous.get(step) != null) {
-            step = previous.get(step);
-            path.add(step);
+        pad.add(tussen);
+        while (vorige.get(tussen) != null) {
+            tussen = vorige.get(tussen);
+            pad.add(tussen);
         }
         // Om het pad van start naar eind te krijgen, moeten we de lijst omkeren
-        Collections.reverse(path);
-        return path;
+        Collections.reverse(pad);
+        return pad;
     }
 }

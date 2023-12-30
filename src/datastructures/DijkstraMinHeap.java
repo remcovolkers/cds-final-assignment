@@ -6,6 +6,7 @@ import models.Station;
 import java.util.ArrayList;
 import java.util.List;
 
+//Overgenomen van RemcoMinHeap, heeft eigen bronnen
 public class DijkstraMinHeap {
     private final List<StationDistancePair> items;
 
@@ -20,13 +21,13 @@ public class DijkstraMinHeap {
 
     public StationDistancePair pop() {
         if (isEmpty()) {
-            throw new IllegalStateException("Heap is empty.");
+            throw new IllegalStateException("Heap is leeg!");
         }
 
         StationDistancePair item = items.getFirst();
-        StationDistancePair lastItem = items.removeLast();
+        StationDistancePair laatsteItem = items.removeLast();
         if (!isEmpty()) {
-            items.set(0, lastItem);
+            items.set(0, laatsteItem);
             siftDown();
         }
 
@@ -111,7 +112,7 @@ public class DijkstraMinHeap {
     }
 
     public void decreaseKey(Station station, double newDistance) {
-        // Vind het index van de StationDistancePair voor de gegeven station
+        // Zoek index van de StationDistancePair voor het gegeven station
         int index = -1;
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).station().equals(station)) {
@@ -120,7 +121,7 @@ public class DijkstraMinHeap {
             }
         }
 
-        // Als het station niet gevonden is of de nieuwe afstand is niet kleiner, doe niets
+        // Als het station niet gevonden is of de nieuwe afstand is niet kleiner -> niets doen
         if (index == -1 || items.get(index).distance() <= newDistance) {
             return;
         }
@@ -128,5 +129,11 @@ public class DijkstraMinHeap {
         // Update de afstand en sorteer de heap opnieuw
         items.set(index, new StationDistancePair(station, newDistance));
         siftUpFromIndex(index);
+    }
+
+    @Override
+    public String toString() {
+        //TODO: implementeer toString
+        return "";
     }
 }

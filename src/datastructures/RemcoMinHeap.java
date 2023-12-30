@@ -3,6 +3,8 @@ package datastructures;
 import java.util.ArrayList;
 import java.util.List;
 
+// Overgenomen / aangepast van:
+// https://gist.github.com/flexelem/70b120ac9bf2965f419f - https://www.geeksforgeeks.org/min-heap-in-java/
 public class RemcoMinHeap<T extends Comparable<T>> {
     private final List<T> items;
 
@@ -33,7 +35,7 @@ public class RemcoMinHeap<T extends Comparable<T>> {
 
     public T peek() {
         if (isEmpty()) {
-            throw new IllegalStateException("Heap is empty.");
+            throw new IllegalStateException("Heap is leeg!");
         }
         return items.getFirst();
     }

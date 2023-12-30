@@ -54,7 +54,7 @@ class AStarAlgorithmTest {
         List<Station> path = new ArrayList<>();
         while (currentStation != null) {
             path.addFirst(currentStation); // Voeg aan begin toe voor correcte volgorde
-            currentStation = aStarAlgorithm.getCameFrom().get(currentStation);
+            currentStation = aStarAlgorithm.getAfkomstigVan().get(currentStation);
         }
 
         // Verwacht dat het pad startStation -> intermediateStation -> endStation is

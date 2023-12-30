@@ -3,6 +3,7 @@ package sortalgorithms;
 import java.util.List;
 
 public class QuickSort {
+    //inspiratie van https://www.geeksforgeeks.org/quick-sort/ en sheets
     public static <T extends Comparable<T>> void quickSort(List<T> list, int begin, int end) {
         if (begin < end) {
             int partitionIndex = partition(list, begin, end);

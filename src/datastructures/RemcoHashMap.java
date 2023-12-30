@@ -1,7 +1,20 @@
 package datastructures;
 
+//Met behulp van https://www.turing.com/kb/implementing-hashmap-in-java / https://www.baeldung.com/java-hashmap-advanced
 public class RemcoHashMap<K, V> {
-    private final Entry<K, V>[] buckets;
+    private static class HashMapEntry<K, V> {
+        final K key;
+        V value;
+        HashMapEntry<K, V> next;
+
+        public HashMapEntry(K key, V value, HashMapEntry<K, V> next) {
+            this.key = key;
+            this.value = value;
+            this.next = next;
+        }
+    }
+
+    private final HashMapEntry<K, V>[] kvPairs;
     private static final int INITIAL_CAPACITY = 16;
     private int size = 0;
 
@@ -10,44 +23,44 @@ public class RemcoHashMap<K, V> {
     }
 
     public RemcoHashMap(int capacity) {
-        this.buckets = new Entry[capacity];
+        this.kvPairs = new HashMapEntry[capacity];
     }
 
     public void put(K key, V value) {
-        Entry<K, V> newEntry = new Entry<>(key, value, null);
-        int bucket = getBucket(key);
+        HashMapEntry<K, V> newHashMapEntry = new HashMapEntry<>(key, value, null);
+        int kvPair = getBucket(key);
 
-        Entry<K, V> existing = buckets[bucket];
-        if (existing == null) {
-            buckets[bucket] = newEntry;
+        HashMapEntry<K, V> bekend = kvPairs[kvPair];
+        if (bekend == null) {
+            kvPairs[kvPair] = newHashMapEntry;
             size++;
         } else {
             // Vergelijk de sleutels, als ze gelijk zijn, vervang de waarde
-            while (existing.next != null) {
-                if (existing.key.equals(key)) {
-                    existing.value = value;
+            while (bekend.next != null) {
+                if (bekend.key.equals(key)) {
+                    bekend.value = value;
                     return;
                 }
-                existing = existing.next;
+                bekend = bekend.next;
             }
 
-            if (existing.key.equals(key)) {
-                existing.value = value;
+            if (bekend.key.equals(key)) {
+                bekend.value = value;
             } else {
-                existing.next = newEntry;
+                bekend.next = newHashMapEntry;
                 size++;
             }
         }
     }
 
     public V get(K key) {
-        Entry<K, V> bucket = buckets[getBucket(key)];
+        HashMapEntry<K, V> kvPair = kvPairs[getBucket(key)];
 
-        while (bucket != null) {
-            if (bucket.key.equals(key)) {
-                return bucket.value;
+        while (kvPair != null) {
+            if (kvPair.key.equals(key)) {
+                return kvPair.value;
             }
-            bucket = bucket.next;
+            kvPair = kvPair.next;
         }
         return null;
     }
@@ -57,18 +70,8 @@ public class RemcoHashMap<K, V> {
     }
 
     private int getBucket(K key) {
-        return Math.abs(key.hashCode()) % buckets.length;
+        return Math.abs(key.hashCode()) % kvPairs.length;
     }
 
-    private static class Entry<K, V> {
-        final K key;
-        V value;
-        Entry<K, V> next;
 
-        public Entry(K key, V value, Entry<K, V> next) {
-            this.key = key;
-            this.value = value;
-            this.next = next;
-        }
-    }
 }
