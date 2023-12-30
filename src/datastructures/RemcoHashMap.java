@@ -28,7 +28,7 @@ public class RemcoHashMap<K, V> {
 
     public void put(K key, V value) {
         HashMapEntry<K, V> newHashMapEntry = new HashMapEntry<>(key, value, null);
-        int kvPair = getBucket(key);
+        int kvPair = getKvPair(key);
 
         HashMapEntry<K, V> bekend = kvPairs[kvPair];
         if (bekend == null) {
@@ -54,7 +54,7 @@ public class RemcoHashMap<K, V> {
     }
 
     public V get(K key) {
-        HashMapEntry<K, V> kvPair = kvPairs[getBucket(key)];
+        HashMapEntry<K, V> kvPair = kvPairs[getKvPair(key)];
 
         while (kvPair != null) {
             if (kvPair.key.equals(key)) {
@@ -69,7 +69,7 @@ public class RemcoHashMap<K, V> {
         return size;
     }
 
-    private int getBucket(K key) {
+    private int getKvPair(K key) {
         return Math.abs(key.hashCode()) % kvPairs.length;
     }
 
