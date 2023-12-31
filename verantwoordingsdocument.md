@@ -148,10 +148,10 @@ vergelijking maken tussen binary search en linear search:
 *Grafiek van de tijdcomplexiteit van insertion-sort.*
 
 ![Quick Sort Big-O Grafiek](src/assets/quick.jpg)
+*Grafiek van de tijdcomplexiteit van quick-sort.*
 
 ![linear versus binary](src/assets/linearvsbinarysearch.png)
-
-*Grafiek van de tijdcomplexiteit van quick-sort.*
+*Grafiek linear versus binary search*
 
 #### Big-O complexiteit van zoekalgoritmen
 

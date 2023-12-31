@@ -57,7 +57,7 @@ class AStarAlgorithmTest {
             currentStation = aStarAlgorithm.getAfkomstigVan().get(currentStation);
         }
 
-        // Verwacht dat het pad startStation -> intermediateStation -> endStation is
+        // Verwacht dat het pad startStation -> tussenstation -> eindstation is
         assertNotNull(path);
         assertEquals(3, path.size());
         assertEquals(startStation, path.get(0));

@@ -31,7 +31,7 @@ public class RemcoHashMapTest {
 
     @Test
     public void testCollisions() {
-        // Voeg twee stations toe met dezelfde hashcode (voor de test kun je ervoor zorgen dat de hashcode hetzelfde is)
+        // Voeg twee stations toe met dezelfde hashcode
         map.put("001A", new Station("001A", "Station A1", "slug-a", "NL", "type-a", 50.01, 4.01));
         map.put("001B", new Station("001B", "Station B1", "slug-b", "BE", "type-b", 51.02, 4.02));
 
