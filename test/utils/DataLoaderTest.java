@@ -34,7 +34,7 @@ public class DataLoaderTest {
     }
 
     @Test
-    public void testRemcoListNotEmpty() {
+    public void testRemcoListIsNietLeeg() {
         assertFalse("RemcoList met stations moet niet leeg zijn", remcoStations.isEmpty());
     }
 
@@ -73,7 +73,7 @@ public class DataLoaderTest {
     }
 
     @Test
-    public void testLoadTracksWithMissingStations() {
+    public void testLoadTracksMetMissendeStations() {
         assertNotNull("Tracks lijst mag niet null zijn", tracks);
         assertTrue("Aantal tracks moet minder zijn dan het aantal geldige regels in het bestand", tracks.size() < 3);
     }

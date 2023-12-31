@@ -39,27 +39,27 @@ public class LinearSearchTest {
     }
 
     @Test
-    public void testSearchFound() {
+    public void testZoekenMetResultaat() {
         Station result = linearSearch.search(stations, "002");
         assertNotNull("Het station moet worden gevonden", result);
         assertEquals("De code van het gevonden station moet '002' zijn", "002", result.getStationsCode());
     }
 
     @Test
-    public void testSearchNotFound() {
+    public void testZoekenZonderResultaat() {
         Station result = linearSearch.search(stations, "004");
         assertNull("Er zou geen station gevonden moeten worden", result);
     }
 
     @Test
-    public void testSearchEmptyList() {
+    public void testZoekenLegelijst() {
         RemcoList<Station> emptyList = new RemcoList<>();
         Station result = linearSearch.search(emptyList, "001");
         assertNull("Er zou geen station gevonden moeten worden in een lege lijst", result);
     }
 
     @Test
-    public void testSearchAtBoundaries() {
+    public void testZoekenUitersten() {
         Station resultFirst = linearSearch.search(stations, "001");
         assertNotNull("Het eerste station moet worden gevonden", resultFirst);
         assertEquals("De code van het eerste station moet '001' zijn", "001", resultFirst.getStationsCode());

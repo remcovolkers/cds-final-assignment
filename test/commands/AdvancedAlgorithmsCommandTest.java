@@ -20,21 +20,21 @@ public class AdvancedAlgorithmsCommandTest {
     }
 
     @Test
-    public void testPrintStationsInRectangle() {
+    public void testPrintStationsInRechthoek() {
         List<Station> stations = command.printStationsInRechthoek(52.4, 5.5, 52.2, 5.7);
-        assertTrue("Moet minstens één station bevatten", !stations.isEmpty());
+        assertFalse("Moet minstens één station bevatten", stations.isEmpty());
         assertTrue("Moet station EML bevatten", stations.stream().anyMatch(s -> s.getStationsCode().equals("EML")));
     }
 
     @Test
-    public void testPrintRoutePlanningStationToStationDijkstra() {
+    public void testRoutePlanningDijkstra() {
         List<Station> path = command.printRoutePlanningDijkstra("EML", "PT");
         assertNotNull("Pad mag niet null zijn", path);
         assertFalse("Pad mag niet leeg zijn", path.isEmpty());
     }
 
     @Test
-    public void testPrintRoutePlanningStationToStationAStar() {
+    public void testRoutePlanningAStar() {
         List<Station> path = command.printRoutePlanningAStar("EML", "PT");
         assertNotNull("Pad mag niet null zijn", path);
         assertFalse("Pad mag niet leeg zijn", path.isEmpty());

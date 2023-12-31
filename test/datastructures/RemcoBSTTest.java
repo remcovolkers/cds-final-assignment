@@ -24,13 +24,13 @@ public class RemcoBSTTest {
     }
 
     @Test
-    public void testFindByCode() {
+    public void testVindMetCode() {
         String searchCode = "001";
         assertEquals(stationA, bst.vindMetCode(searchCode));
     }
 
     @Test
-    public void testNotFoundByCode() {
+    public void testVindNietMetCode() {
         String searchCode = "999";
         assertNull(bst.vindMetCode(searchCode));
     }

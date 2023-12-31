@@ -20,30 +20,30 @@ public class SearchCommandTest {
     }
 
     @Test
-    public void testPerformBinarySearch() {
-        Station foundStation = searchCommand.binairZoeken("EML");
-        assertNotNull("Station moet gevonden worden", foundStation);
-        assertEquals("Gevonden station moet de juiste zijn", "EML", foundStation.getStationsCode());
+    public void testBinarySearch() {
+        Station gevondenStation = searchCommand.binairZoeken("EML");
+        assertNotNull("Station moet gevonden worden", gevondenStation);
+        assertEquals("Gevonden station moet de juiste zijn", "EML", gevondenStation.getStationsCode());
     }
 
     @Test
-    public void testPerformLinearSearch() {
-        Station foundStation = searchCommand.lineairZoeken("EML");
-        assertNotNull("Station moet gevonden worden", foundStation);
-        assertEquals("Gevonden station moet de juiste zijn", "EML", foundStation.getStationsCode());
+    public void testLinearSearch() {
+        Station gevondenStation = searchCommand.lineairZoeken("EML");
+        assertNotNull("Station moet gevonden worden", gevondenStation);
+        assertEquals("Gevonden station moet de juiste zijn", "EML", gevondenStation.getStationsCode());
     }
 
     @Test
-    public void testPerformHashMapSearch() {
-        Station foundStation = searchCommand.hashMapZoeken("EML");
-        assertNotNull("Station moet gevonden worden", foundStation);
-        assertEquals("Gevonden station moet de juiste zijn", "EML", foundStation.getStationsCode());
+    public void testHashmapSearch() {
+        Station gevondenStation = searchCommand.hashMapZoeken("EML");
+        assertNotNull("Station moet gevonden worden", gevondenStation);
+        assertEquals("Gevonden station moet de juiste zijn", "EML", gevondenStation.getStationsCode());
     }
 
     @Test
-    public void testPerformBSTSearch() {
-        Station foundStation = searchCommand.bstZoeken("EML");
-        assertNotNull("Station moet gevonden worden", foundStation);
-        assertEquals("Gevonden station moet de juiste zijn", "EML", foundStation.getStationsCode());
+    public void testBSTSearch() {
+        Station gevondenStation = searchCommand.bstZoeken("EML");
+        assertNotNull("Station moet gevonden worden", gevondenStation);
+        assertEquals("Gevonden station moet de juiste zijn", "EML", gevondenStation.getStationsCode());
     }
 }

@@ -18,7 +18,7 @@ public class RemcoListTest {
     }
 
     @Test
-    public void testIsEmpty() {
+    public void testIsLeeg() {
         assertFalse("List should not be empty", list.isEmpty());
         list = new RemcoList<>(); // reset list
         assertTrue("New list should be empty", list.isEmpty());

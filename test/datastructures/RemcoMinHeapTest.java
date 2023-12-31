@@ -38,7 +38,7 @@ public class RemcoMinHeapTest {
     }
 
     @Test
-    public void testIsEmpty() {
+    public void testIsLeeg() {
         assertTrue(minHeap.isEmpty());
         minHeap.add(4);
         assertFalse(minHeap.isEmpty());

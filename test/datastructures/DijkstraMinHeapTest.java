@@ -16,7 +16,7 @@ class DijkstraMinHeapTest {
     }
 
     @Test
-    void addAndPopTest() {
+    void addEnPopTest() {
         Station station1 = new Station("STA", "Station A", "slug-a", "CountryA", "type-a", 50.01, 4.01);
         Station station2 = new Station("STB", "Station B", "slug-b", "CountryB", "type-b", 51.02, 4.02);
 
@@ -45,14 +45,14 @@ class DijkstraMinHeapTest {
     }
 
     @Test
-    void popFromEmptyHeapTest() {
+    void popLegeHeapTest() {
         assertThrows(IllegalStateException.class, () -> {
             heap.pop();
         });
     }
 
     @Test
-    void decreaseKeyNonExistingStationTest() {
+    void decreaseKeyOnbestaandStationTest() {
         Station station1 = new Station("STA", "Station A", "slug-a", "CountryA", "type-a", 50.01, 4.01);
         heap.add(new DijkstraAlgorithm.StationDistancePair(station1, 10.0));
 

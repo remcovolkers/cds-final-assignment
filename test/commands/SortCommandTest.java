@@ -22,18 +22,18 @@ public class SortCommandTest {
     }
 
     @Test
-    public void testPerformInsertionSort() {
-        List<Station> sortedStations = sortCommand.insertionSortUitvoering();
-        assertTrue("Lijst moet gesorteerd zijn", isSorted(sortedStations));
+    public void testInsertionSort() {
+        List<Station> gesorteerdeStations = sortCommand.insertionSortUitvoering();
+        assertTrue("Lijst moet gesorteerd zijn", isGesorteerd(gesorteerdeStations));
     }
 
     @Test
-    public void testPerformQuickSort() {
-        List<Station> sortedStations = sortCommand.quickSortUitvoering();
-        assertTrue("Lijst moet gesorteerd zijn", isSorted(sortedStations));
+    public void testQuickSort() {
+        List<Station> gesorteerdeStations = sortCommand.quickSortUitvoering();
+        assertTrue("Lijst moet gesorteerd zijn", isGesorteerd(gesorteerdeStations));
     }
 
-    private boolean isSorted(List<Station> stations) {
+    private boolean isGesorteerd(List<Station> stations) {
         for (int i = 0; i < stations.size() - 1; i++) {
             if (stations.get(i).getStationsCode().compareTo(stations.get(i + 1).getStationsCode()) > 0) {
                 return false;

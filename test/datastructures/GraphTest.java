@@ -27,14 +27,14 @@ public class GraphTest {
     }
 
     @Test
-    public void testAddAndGetStations() {
+    public void testAddEnGetStations() {
         assertEquals("Aantal stations komt niet overeen", 2, graph.getStations().size());
         assertNotNull("Station STA moet aanwezig zijn", graph.getStation("STA"));
         assertNotNull("Station STB moet aanwezig zijn", graph.getStation("STB"));
     }
 
     @Test
-    public void testGetAllTracks() {
+    public void testGetAlleTracks() {
         List<Track> allTracks = graph.getAlleTracks();
         assertNotNull("Tracks lijst mag niet null zijn", allTracks);
         assertFalse("Tracks lijst mag niet leeg zijn", allTracks.isEmpty());
@@ -44,6 +44,7 @@ public class GraphTest {
     @Test
     public void testToGraphVizFormat() {
         String graphViz = graph.toGraphViz();
+        assertTrue("GraphViz string moet de verbinding bevatten", graphViz.startsWith("digraph G {"));
         assertTrue("GraphViz string moet de verbinding bevatten", graphViz.contains("\"STA\" -> \"STB\""));
     }
 

@@ -18,7 +18,7 @@ public class RemcoHashMapTest {
     }
 
     @Test
-    public void testPutAndGet() {
+    public void testPutEnGet() {
         assertEquals("Station A", map.get("001").getNaamVolledig());
         assertEquals("Station B", map.get("002").getNaamVolledig());
         assertEquals("Station C", map.get("003").getNaamVolledig());
@@ -30,7 +30,7 @@ public class RemcoHashMapTest {
     }
 
     @Test
-    public void testCollisionHandling() {
+    public void testCollisions() {
         // Voeg twee stations toe met dezelfde hashcode (voor de test kun je ervoor zorgen dat de hashcode hetzelfde is)
         map.put("001A", new Station("001A", "Station A1", "slug-a", "NL", "type-a", 50.01, 4.01));
         map.put("001B", new Station("001B", "Station B1", "slug-b", "BE", "type-b", 51.02, 4.02));
@@ -40,7 +40,7 @@ public class RemcoHashMapTest {
     }
 
     @Test
-    public void testReplaceValue() {
+    public void testVervangValue() {
         map.put("001", new Station("001", "Station A New", "slug-a", "NL", "type-a", 50.01, 4.01));
         assertEquals("Station A New", map.get("001").getNaamVolledig());
         assertEquals(3, map.size());

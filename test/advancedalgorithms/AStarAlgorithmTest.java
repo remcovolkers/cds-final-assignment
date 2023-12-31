@@ -21,12 +21,12 @@ class AStarAlgorithmTest {
 
     @BeforeEach
     void setUp() {
-        // Maak stations
+        // stations
         startStation = new Station("STA", "Start Station", "slug-a", "CountryA", "type-a", 50.01, 4.01);
         endStation = new Station("STB", "End Station", "slug-b", "CountryB", "type-b", 51.02, 4.02);
         intermediateStation = new Station("STC", "Intermediate Station", "slug-c", "CountryC", "type-c", 51.00, 4.03);
 
-        // Maak tracks
+        // tracks
         ArrayList<Track> tracks = new ArrayList<>();
         tracks.add(new Track(startStation, intermediateStation, false));
         tracks.add(new Track(intermediateStation, endStation, false));
