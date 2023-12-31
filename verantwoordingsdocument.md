@@ -149,7 +149,7 @@ vergelijking maken tussen binary search en linear search:
 
 ![Quick Sort Big-O Grafiek](src/assets/quick.jpg)
 
-![linear versus binary](https://images.squarespace-cdn.com/content/v1/5efc3845201cfd62a7cad809/b04f4b21-f887-4e54-a0f0-75ca9d7dd7d8/Screen+Shot+2022-01-04+at+11.01.17+PM.png?format=2500w)
+![linear versus binary](src/assets/linearvsbinarysearch.png)
 
 *Grafiek van de tijdcomplexiteit van quick-sort.*
 
